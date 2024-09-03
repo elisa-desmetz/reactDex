@@ -1,20 +1,27 @@
-import { useState, useEffect } from 'react'
-import supabase from '../utils/supabase'
-import Card from './components/Card'
+import { useEffect, useState } from 'react'
+
 import slugify from '../utils/slugify'
+import supabase from '../utils/supabase'
+
 import './assets/css/App.css'
+import Card from './components/Card'
+import FilterForm from './components/controller/FilterForm'
 
 function Page() {
 
   const pokedex = loadDex()
   const types = loadType()
 
-  return (
+  return (<>
+    <div id="filters">
+      <FilterForm tbTypes={types} tbArea={null} />
+    </div>
     <div id="pokedexList">
       {pokedex.map((elem) => (
         <Card key={slugify(elem.name_fr)} pkmn={elem} tbTypes={types}/>
       ))}
     </div>
+    </>
   )
 }
 export default Page

@@ -1,0 +1,63 @@
+/*
+----------
+FILTRE TYPES
+----------
+*/
+
+#typeButtonList {
+    padding: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: start;
+    gap: 10px;
+    background-color: rgba(222, 222, 222, 0.8);
+}
+
+.lbType {
+    display: flex;
+}
+
+.lbType input {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    /* Not removed via appearance */
+    margin: 0;
+}
+
+.btnType {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: rgba(222, 222, 222, 1);
+    padding: 5px;
+    height: 28px;
+    width: 100px;
+    border-radius: 19px / 50%;
+    display: grid;
+    align-self: center;
+}
+
+.lbType:hover input~.btnType {
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 1);
+}
+
+.lbType input:checked~.btnType {
+    box-shadow: inset -4px 0 4px rgba(0, 0, 0, 0.8), inset 4px 0 4px rgba(0, 0, 0, 0.8);
+}
+
+.btnType>img {
+    grid-area: 1/1;
+    width: 28px;
+}
+
+.btnType>div {
+    grid-area: 1/2;
+    align-self: center;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 650;
+    font-size: 18px;
+    font-variant-caps: small-caps;
+}

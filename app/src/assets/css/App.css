@@ -25,13 +25,92 @@ body {
 
 #root {
   margin:auto;
+  display:grid;
+  grid-template-columns: auto 5fr;
 }
 
 #pokedexList {
+  grid-area:3/1;
   display:flex;
   flex-flow:row wrap;
   justify-content: center;
 }
+
+#filters {
+  grid-area:1/1;
+  position:sticky;
+  top:0;
+  z-index:99;
+}
+
+#filterForm {
+  display:grid;
+}
+
+#miscFilter {
+  grid-area:1/1;
+  display:grid;
+  grid-template-columns: fit-content(300px) fit-content(600px) fit-content(500px) 100px;
+  gap:10px;
+  padding:10px;
+  background-color:rgba(210,210,210,1);
+  justify-content: space-between;
+  border-bottom: solid 2px rgba(150,150,150,0.1);
+}
+
+/* Zone des filtres type */
+#typesFilter {
+  grid-area:2/1;
+}
+
+
+/* Zone des filtres zone */
+#areasFilter {
+  grid-area:3/1;
+}
+
+/*
+---------
+COLLAPSE
+----------
+*/
+
+.collapsible {
+  font-family: var(--font-condensed);  
+  font-variant-caps: small-caps;
+  font-size: 25px;
+  font-weight:600;
+  color: rgba(0,0,0,0.7);
+  background-color: rgba(222,222,222,1);
+  cursor: pointer;
+  padding: 5px 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  border-bottom: solid 2px rgba(0,0,0,0.4);
+}
+
+.collapsible:before {
+  font-family: var(--font-family);
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 10px;
+  line-height:35px;
+  color: rgba(0,0,0,0.7);
+  float: left;
+  margin-right: 15px;
+}
+
+.active:before {
+  font-family: var(--font-family);
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+/*
+---------
+CARD
+----------
+*/
 
 .card {
   display: grid;
