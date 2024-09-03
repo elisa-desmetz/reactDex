@@ -4,22 +4,21 @@ import slugify from '../utils/slugify'
 import supabase from '../utils/supabase'
 
 import './assets/css/App.css'
-import Card from './components/Card'
+import PokedexList from './components/PokedexList'
 import FilterForm from './components/controller/FilterForm'
 
 function Page() {
 
-  const pokedex = loadDex()
-  const types = loadType()
+  const tbPokedex = loadDex()
+  const tbTypes = loadType()
+  const tbAreas = loadArea()
 
   return (<>
     <div id="filters">
-      <FilterForm tbTypes={types} tbArea={null} />
+      <FilterForm tbTypes={tbTypes} tbArea={tbAreas} />
     </div>
-    <div id="pokedexList">
-      {pokedex.map((elem) => (
-        <Card key={slugify(elem.name_fr)} pkmn={elem} tbTypes={types}/>
-      ))}
+    <div id="pokedexList" className='filterContainer'>
+        <PokedexList tbPokedex={tbPokedex} tbTypes={tbTypes} tbAreas={tbAreas}/>
     </div>
     </>
   )
@@ -63,10 +62,10 @@ function loadDex(){
 }
 
 function loadType() {
-  const [tbType, setPokedex] = useState([])
+  const [tbType, setTypes] = useState([])
 
   useEffect(() => {
-    async function getPokedex() {
+    async function getTypes() {
       const { data: tbType } = await supabase
       .from("type")
       .select(
@@ -79,11 +78,11 @@ function loadType() {
       .lt("id_type", 19);
 
       if (tbType.length > 1) {
-        setPokedex(tbType)
+        setTypes(tbType)
       }
     }
 
-    getPokedex()
+    getTypes()
   }, [])
 
   // Création des variables couleur à partir de la liste des types
@@ -94,4 +93,29 @@ function loadType() {
   });
 
   return tbType
+}
+
+function loadArea(){
+  const [tbArea, setAreas] = useState([])
+
+  useEffect(() => {
+    async function getAreas() {
+      const { data: tbArea } = await supabase
+        .from("zone_cap")
+        .select(
+            `id,
+            name,
+            img`
+        )
+        .order("id")
+
+        if (tbArea.length > 1) {
+          setAreas(tbArea)
+        }
+      }
+  
+      getAreas()
+    }, [])
+
+    return tbArea
 }

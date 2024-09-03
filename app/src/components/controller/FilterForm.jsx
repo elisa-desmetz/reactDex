@@ -25,7 +25,7 @@ function TypeFilter({tbTypes}){
             <Collapsible title={'Types'}/>
             <div id="typeButtonList">
                 {tbTypes.map((type) => (
-                    <TypeButton type={type}/>
+                    <TypeButton key={slugify(type.name)} type={type}/>
                 ))}
             </div>
         </div>
@@ -48,7 +48,21 @@ function AreaFilter({tbArea}){
     return(
         <div id="areasFilter">
             <Collapsible title={'Zone de Capture'}/>
+            <div id="areaButtonList">
+                {tbArea.filter((area) => area.id > 0).map((area) =>(
+                    <AreaButton key={area.id} area={area}/>
+                ))}
+            </div>
         </div>
+    )
+}
+
+function AreaButton({area}){
+    return (
+        <label className="lbArea">
+            <input type="checkbox" value = {"." + slugify(area.name)}/>
+            <div className="btnArea">{area.name}</div>
+        </label>
     )
 }
 
