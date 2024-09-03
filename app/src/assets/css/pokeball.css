@@ -1,0 +1,127 @@
+.pokeball_back {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        var(--white-ball) 20%, 
+        transparent 20%
+      ), 
+      radial-gradient(
+        var(--bkg-ball) 30%, 
+        transparent 30%
+      ), 
+      linear-gradient(
+        var(--red-ball) 46%, 
+        var(--bkg-ball) 46% 54%, 
+        var(--white-ball) 54%
+      );
+  }
+  
+  .superball_back{
+    height:100px;
+    width:100px;
+    border-radius:50%;
+    background:
+      radial-gradient(
+        var(--white-ball) 20%, 
+        transparent 20%
+      ), 
+      radial-gradient(
+        var(--bkg-ball) 30%, 
+        transparent 30%
+      ), 
+      linear-gradient(
+        transparent 46%, 
+        var(--bkg-ball) 46% 54%, 
+        var(--white-ball) 54%
+      ),
+      linear-gradient(
+        transparent 50%, 
+        var(--bkg-ball) 50%
+      ),
+      radial-gradient(
+        var(--blue-ball) 45%, 
+        transparent 45%
+      ),
+      radial-gradient(
+        var(--bkg-ball) 45%, 
+        transparent 45%
+      ), 
+      conic-gradient(
+        from -90deg, 
+        var(--blue-ball) 0deg 30deg, 
+        var(--red-ball) 30deg 55deg, 
+        var(--blue-ball) 55deg 125deg,
+        var(--red-ball) 125deg 150deg, 
+        var(--blue-ball) 150deg 180deg,
+        transparent 180deg
+      );
+  }
+  
+  .hyperball_back{
+    height:100px;
+    width:100px;
+    border-radius:50%;
+    background:
+      radial-gradient(
+        var(--white-ball) 20%, 
+        transparent 20%
+      ), 
+      radial-gradient(
+        var(--bkg-ball) 30%, 
+        transparent 30%
+      ), 
+      linear-gradient(
+        transparent 46%, 
+        var(--bkg-ball) 46% 54%, 
+        var(--white-ball) 54%
+      ), 
+      linear-gradient(
+        transparent 30%, 
+        var(--black-ball) 30% 50%,
+        var(--bkg-ball) 50%
+      ), 
+      linear-gradient(
+        transparent 30%, 
+        var(--bkg-ball) 30%
+      ),
+      linear-gradient(
+        90deg, 
+        var(--black-ball) 10%, 
+        var(--yellow-ball) 10% 30%, 
+        var(--black-ball) 30% 70%, 
+        var(--yellow-ball) 70% 90%, 
+        var(--black-ball) 90%
+      )
+  }
+  
+  .masterball_back{
+    height:100px;
+    width:100px;
+    border-radius:50%;
+    background:
+      radial-gradient(
+        var(--white-ball) 20%, 
+        transparent 20%
+      ), 
+      radial-gradient(
+        var(--bkg-ball) 30%, 
+        transparent 30% 
+      ), 
+      radial-gradient(
+        at 5% 5%, 
+        var(--pink-ball) 20%, 
+        transparent 20%
+      ),
+      radial-gradient(
+        at 95% 5%, 
+        var(--pink-ball) 20%
+        , transparent 20%
+      ),
+      linear-gradient(
+        var(--purple-ball) 46%, 
+        var(--bkg-ball) 46% 54%,
+        var(--white-ball) 54%
+      )
+  }
