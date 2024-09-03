@@ -10,11 +10,11 @@ function Page() {
   const types = loadType()
 
   return (
-    <>
+    <div id="pokedexList">
       {pokedex.map((elem) => (
         <Card key={slugify(elem.name_fr)} pkmn={elem} tbTypes={types}/>
       ))}
-    </>
+    </div>
   )
 }
 export default Page
