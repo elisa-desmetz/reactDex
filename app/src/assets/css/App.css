@@ -27,6 +27,7 @@ body {
   margin:auto;
   display:grid;
   grid-template-columns: auto 5fr;
+  color: rgba(0,0,0,0.7);
 }
 
 #filters {
@@ -57,7 +58,7 @@ body {
 #miscFilter {
   grid-area:1/1;
   display:grid;
-  grid-template-columns: fit-content(300px) fit-content(600px) fit-content(500px) 100px;
+  grid-template-columns: max-content 100px;
   gap:10px;
   padding:10px;
   background-color:rgba(210,210,210,1);
@@ -87,7 +88,6 @@ COLLAPSE
   font-variant-caps: small-caps;
   font-size: 25px;
   font-weight:600;
-  color: rgba(0,0,0,0.7);
   background-color: rgba(222,222,222,1);
   cursor: pointer;
   padding: 5px 18px;

@@ -3,74 +3,97 @@ import "../../assets/css/filters.css"
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
-export default function FilterForm({tbTypes, tbArea, onTypeChange, onAreaChange}){
-    return(
+export default function FilterForm({ tables, onChange }) {
+    return (
         <form id="filterForm">
-            <MiscFilters />
-            <TypeFilter tbTypes={tbTypes} onChange={onTypeChange}/>
-            <AreaFilter tbArea={tbArea} onChange={onAreaChange}/>
+            <MiscFilters onChange={{ text: onChange.text }} />
+            <TypeFilter tbTypes={tables.type} onChange={onChange.type} />
+            <AreaFilter tbArea={tables.area} onChange={onChange.area} />
         </form>
     )
 }
 
-function MiscFilters(){
-    return(
+function MiscFilters({ onChange }) {
+    return (
         <div id="miscFilter">
-
+            <div id="quicksearch">
+                <div className="desc">Nom&nbsp;</div>
+                <SearchField onChange={onChange.text} />
+            </div>
         </div>
     )
 }
 
-function TypeFilter({tbTypes, onChange}){
-    return(
+function SearchField({ onChange }) {
+    const [tfValue, setTfValue] = useState('')
+
+    return (
+        <>
+            <input className="textfield" value={tfValue} type="text" placeholder="Rechercher"
+                onChange={(e) => {
+                    setTfValue(e.target.value)
+                    onChange(e.target.value)
+                }} />
+            <div className="searchReset">
+                {tfValue.length != 0 &&
+                    <div id="btnReset" onClick={() => {
+                        setTfValue('')
+                        onChange('')
+                    }}>✖</div>
+                }
+            </div>
+        </>
+    )
+}
+
+function TypeFilter({ tbTypes, onChange }) {
+    return (
         <div id="typesFilter">
-            <Collapsible title={'Types'}/>
+            <Collapsible title={'Types'} />
             <div id="typeButtonList">
                 {tbTypes.map((type) => (
-                    <TypeButton key={slugify(type.name)} onChange={onChange} type={type}/>
+                    <TypeButton key={slugify(type.name)} onChange={onChange} type={type} />
                 ))}
             </div>
         </div>
     )
 }
 
-function TypeButton({type, onChange}){
-
-
+function TypeButton({ type, onChange }) {
     return (
         <label className="lbType">
-            <input type="checkbox" onChange={(e) => onChange(e.target.checked, type.id_type)}/>
-            <div className="btnType" style={{backgroundColor: 'var(--color-'+slugify(type.name)+')'}}>
-                <img src={type.icon_mini}/>
+            <input type="checkbox" onChange={(e) => onChange(e.target.checked, type.id_type)} />
+            <div className="btnType" style={{ backgroundColor: 'var(--color-' + slugify(type.name) + ')' }}>
+                <img src={type.icon_mini} />
                 <div>{type.name}</div>
             </div>
         </label>
     )
 }
 
-function AreaFilter({tbArea, onChange}){
-    return(
+function AreaFilter({ tbArea, onChange }) {
+    return (
         <div id="areasFilter">
-            <Collapsible title={'Zone de Capture'}/>
+            <Collapsible title={'Zone de Capture'} />
             <div id="areaButtonList">
-                {tbArea.filter((area) => area.id > 0).map((area) =>(
-                    <AreaButton key={area.id} area={area} onChange={onChange}/>
+                {tbArea.filter((area) => area.id > 0).map((area) => (
+                    <AreaButton key={area.id} area={area} onChange={onChange} />
                 ))}
             </div>
         </div>
     )
 }
 
-function AreaButton({area, onChange}){
+function AreaButton({ area, onChange }) {
     return (
         <label className="lbArea">
-            <input type="checkbox" onChange={(e) => onChange(e.target.checked, area.id)}/>
+            <input type="checkbox" onChange={(e) => onChange(e.target.checked, area.id)} />
             <div className="btnArea">{area.name}</div>
         </label>
     )
 }
 
-function Collapsible({title}){
+function Collapsible({ title }) {
     return (
         <div className="collapsible active">{title}</div>
     )

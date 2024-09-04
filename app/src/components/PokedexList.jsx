@@ -6,11 +6,11 @@ import Gallery from "./Gallery";
 import Identity from "./Identity";
 import Type from "./images/Type";
 
-export default function PokedexList({ tbPokedex, tbTypes, tbAreas }) {
+export default function PokedexList({ tables }) {
     return (
         <>
             <AnimatePresence>
-                {tbPokedex.map((pokemon, index) => (
+                {tables.pokedex.map((pokemon, index) => (
                     <motion.div
                         key={index}
                         layout
@@ -18,14 +18,14 @@ export default function PokedexList({ tbPokedex, tbTypes, tbAreas }) {
                         animate={{ transform: "scale(1)" }}
                         exit={{ transform: "scale(0)" }}
                     >
-                        <Card key={slugify(pokemon.name_fr)} pokemon={pokemon} tbTypes={tbTypes} tbAreas={tbAreas} />
+                        <Card key={slugify(pokemon.name_fr)} pokemon={pokemon} tables={{type:tables.type, area:tables.area}} />
                     </motion.div>
                 ))}
             </AnimatePresence>
         </>)
 }
 
-function Card({ pokemon, tbTypes, tbAreas }) {
+function Card({ pokemon, tables }) {
     const typeList = Object.entries(pokemon.reg_type);
     const gallery = Object.entries(pokemon.reg_galerie);
 
@@ -34,7 +34,7 @@ function Card({ pokemon, tbTypes, tbAreas }) {
             <Identity name={{ fr: pokemon.name_fr, en: pokemon.name_en }} num={pokemon.pokedex_id} />
             <div className="types">
                 {typeList.map((type) => (
-                    <Type key={type.at(0)} type={type.at(1)} tbTypes={tbTypes} />
+                    <Type key={type.at(0)} type={type.at(1)} tbTypes={tables.type} />
                 ))}
             </div>
             {/* .at(0) pour tester sur la premiere image sans avoir à implémenter le controller */}

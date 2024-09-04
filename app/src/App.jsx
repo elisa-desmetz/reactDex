@@ -14,6 +14,7 @@ function Page() {
 
   const [typeFilters, setTypeFilters] = useState(new Set());
   const [areaFilters, setAreaFilters] = useState(new Set());
+  const [textSearch, setTextSearch] = useState("")
 
   function updateTypeFilters(checked, typeFilter) {
     if (checked)
@@ -37,6 +38,10 @@ function Page() {
       });
   }
 
+  function updateTextSearch(value) {
+    setTextSearch(value)
+  }
+
   const filteredPokedex = tbPokedex.filter((pokemon) => {
     const pokemonTypes = new Set(Object.values(pokemon.reg_type))
     return (
@@ -44,26 +49,33 @@ function Page() {
         areaFilters.has(pokemon.area_id)) &&
       (typeFilters.size === 0 ||
         pokemonTypes.isSupersetOf(typeFilters)
+      ) && 
+      ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
       )
     );
   });
 
-  const searchResult = (pokedex) => {
-    if (pokedex.length===0)
-      return "Aucun résultat"
-    else if (pokedex.length===1)
-      return "1 espèce recensée"
+  const searchResultDetail = (pokedex) => {
+    if (pokedex.length === 0)
+      return "Aucun résultat."
+    else if (pokedex.length === 1)
+      return "1 espèce recensée."
     else
-      return pokedex.length + " espèces recensées"
+      return `${pokedex.length} espèces recensées.`
   }
 
   return (<>
     <div id="filters">
-      <FilterForm tbTypes={tbTypes} tbArea={tbAreas} onTypeChange={updateTypeFilters} onAreaChange={updateAreaFilters} />
+      <FilterForm
+        tables={{ type: tbTypes, area: tbAreas }}
+        onChange={{ type: updateTypeFilters, area: updateAreaFilters, text: updateTextSearch }}
+      />
     </div>
-    <div id="searchResult">{searchResult(filteredPokedex)}</div>
+    <div id="searchResult">{searchResultDetail(filteredPokedex)}</div>
     <div id="pokedexList">
-      <PokedexList tbPokedex={filteredPokedex} tbTypes={tbTypes} tbAreas={tbAreas} />
+      <PokedexList
+        tables={{ pokedex: filteredPokedex, type: tbTypes, area: tbAreas }}
+      />
     </div>
   </>
   )
