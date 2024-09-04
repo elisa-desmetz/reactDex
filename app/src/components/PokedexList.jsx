@@ -1,5 +1,7 @@
 import slugify from "../../utils/slugify";
 
+import { motion } from "framer-motion"
+
 import Identity from "./Identity";
 import Type from "./images/Type";
 import Gallery from "./Gallery";
@@ -7,8 +9,16 @@ import Gallery from "./Gallery";
 export default function PokedexList({ tbPokedex, tbTypes, tbAreas }) {
     return (
         <>
-            {tbPokedex.map((pokemon) => (
-                <Card key={slugify(pokemon.name_fr)} pokemon={pokemon} tbTypes={tbTypes} tbAreas={tbAreas} />
+            {tbPokedex.map((pokemon, index) => (
+                <motion.div
+                    key={index}
+                    layout
+                    initial={{ transform: "scale(0)" }}
+                    animate={{ transform: "scale(1)" }}
+                    exit={{ transform: "scale(0)" }}
+                >
+                    <Card key={slugify(pokemon.name_fr)} pokemon={pokemon} tbTypes={tbTypes} tbAreas={tbAreas} />
+                </motion.div>
             ))}
         </>)
 }
@@ -17,15 +27,8 @@ function Card({ pokemon, tbTypes, tbAreas }) {
     const typeList = Object.entries(pokemon.reg_type);
     const gallery = Object.entries(pokemon.reg_galerie);
 
-    let filterData = "card filterItem"
-    filterData = filterData.concat(" "+slugify(pokemon.name_fr))
-    filterData = filterData.concat(" "+slugify(pokemon.name_en))
-    typeList.forEach((type) => {
-        filterData = filterData.concat(" "+slugify(tbTypes.at(type.at(1) - 1).name))
-    })
-
     return (
-        <div className={filterData}>
+        <div className="card">
             <Identity name={{ fr: pokemon.name_fr, en: pokemon.name_en }} num={pokemon.pokedex_id} />
             <div className="types">
                 {typeList.map((type) => (
