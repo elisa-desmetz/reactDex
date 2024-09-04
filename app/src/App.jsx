@@ -8,9 +8,9 @@ import PokedexList from './components/PokedexList'
 import FilterForm from './components/controller/FilterForm'
 
 function Page() {
-  const tbPokedex = loadDex()
-  const tbTypes = loadType()
-  const tbAreas = loadArea()
+  const { pokedex: tbPokedex, loading: loadingDex } = loadDex(); 
+  const { tbType: tbTypes, loading: loadingTypes } = loadType();
+  const { tbArea: tbAreas, loading: loadingAreas } = loadArea();
 
   const [typeFilters, setTypeFilters] = useState(new Set());
   const [areaFilters, setAreaFilters] = useState(new Set());
@@ -64,6 +64,9 @@ function Page() {
       return `${pokedex.length} espèces recensées.`
   }
 
+  if (loadingDex || loadingTypes || loadingAreas) {
+    return <div>Chargement...</div>;
+  }
   return (<>
     <div id="filters">
       <FilterForm
@@ -84,7 +87,8 @@ export default Page
 
 
 function loadDex() {
-  const [pokedex, setPokedex] = useState([])
+  const [pokedex, setPokedex] = useState([])  
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function getPokedex() {
@@ -106,19 +110,21 @@ function loadDex() {
         .order("forme")
       //.lt("pokedex_id", 4)
 
-      if (pokedex.length > 1) {
+      if (pokedex) {
         setPokedex(pokedex)
       }
+      setLoading(false);
     }
 
     getPokedex()
   }, [])
 
-  return pokedex
+  return { pokedex, loading }
 }
 
 function loadType() {
   const [tbType, setTypes] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function getTypes() {
@@ -134,9 +140,10 @@ function loadType() {
         .order("id_type")
         .lt("id_type", 19);
 
-      if (tbType.length > 1) {
+      if (tbType) {
         setTypes(tbType)
       }
+      setLoading(false)
     }
 
     getTypes()
@@ -149,11 +156,12 @@ function loadType() {
     root.style.setProperty("--color-" + name, `rgb(${type.rgb})`);
   });
 
-  return tbType
+  return { tbType, loading }
 }
 
 function loadArea() {
-  const [tbArea, setAreas] = useState([])
+  const [tbArea, setAreas] = useState([])  
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function getAreas() {
@@ -166,13 +174,14 @@ function loadArea() {
         )
         .order("id")
 
-      if (tbArea.length > 1) {
+      if (tbArea) {
         setAreas(tbArea)
       }
+      setLoading(false)
     }
 
     getAreas()
   }, [])
 
-  return tbArea
+  return { tbArea, loading }
 }
