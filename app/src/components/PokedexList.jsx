@@ -1,6 +1,6 @@
 import slugify from "../../utils/slugify";
 
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 import Identity from "./Identity";
 import Type from "./images/Type";
@@ -9,17 +9,19 @@ import Gallery from "./Gallery";
 export default function PokedexList({ tbPokedex, tbTypes, tbAreas }) {
     return (
         <>
-            {tbPokedex.map((pokemon, index) => (
-                <motion.div
-                    key={index}
-                    layout
-                    initial={{ transform: "scale(0)" }}
-                    animate={{ transform: "scale(1)" }}
-                    exit={{ transform: "scale(0)" }}
-                >
-                    <Card key={slugify(pokemon.name_fr)} pokemon={pokemon} tbTypes={tbTypes} tbAreas={tbAreas} />
-                </motion.div>
-            ))}
+            <AnimatePresence>
+                {tbPokedex.map((pokemon, index) => (
+                    <motion.div
+                        key={index}
+                        layout
+                        initial={{ transform: "scale(0)" }}
+                        animate={{ transform: "scale(1)" }}
+                        exit={{ transform: "scale(0)" }}
+                    >
+                        <Card key={slugify(pokemon.name_fr)} pokemon={pokemon} tbTypes={tbTypes} tbAreas={tbAreas} />
+                    </motion.div>
+                ))}
+            </AnimatePresence>
         </>)
 }
 

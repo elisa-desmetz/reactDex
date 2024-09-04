@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence } from "framer-motion"
 
 import slugify from '../utils/slugify'
 import supabase from '../utils/supabase'
@@ -57,9 +56,7 @@ function Page() {
     </div>
     <div id="pokedexList" className='filterContainer'>
 
-      <AnimatePresence>
-        <PokedexList tbPokedex={filteredPokedex} tbTypes={tbTypes} tbAreas={tbAreas} />
-      </AnimatePresence>
+      <PokedexList tbPokedex={filteredPokedex} tbTypes={tbTypes} tbAreas={tbAreas} />
     </div>
   </>
   )
