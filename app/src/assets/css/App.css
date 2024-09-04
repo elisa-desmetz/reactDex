@@ -29,18 +29,25 @@ body {
   grid-template-columns: auto 5fr;
 }
 
-#pokedexList {
-  grid-area:3/1;
-  display:flex;
-  flex-flow:row wrap;
-  justify-content: center;
-}
-
 #filters {
   grid-area:1/1;
   position:sticky;
   top:0;
   z-index:99;
+}
+
+#searchResult {
+  grid-area: 2/1;
+  display:block;
+  margin:5px;
+}
+
+#pokedexList {
+  grid-area:3/1;
+  display:flex;
+  flex-flow:row wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
 #filterForm {
@@ -119,7 +126,6 @@ CARD
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   background-color: #DEDEDE;
-  margin : 5px;
   padding:5px;
   width:420px;
   }

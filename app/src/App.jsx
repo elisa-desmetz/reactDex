@@ -48,14 +48,21 @@ function Page() {
     );
   });
 
+  const searchResult = (pokedex) => {
+    if (pokedex.length===0)
+      return "Aucun résultat"
+    else if (pokedex.length===1)
+      return "1 espèce recensée"
+    else
+      return pokedex.length + " espèces recensées"
+  }
+
   return (<>
     <div id="filters">
       <FilterForm tbTypes={tbTypes} tbArea={tbAreas} onTypeChange={updateTypeFilters} onAreaChange={updateAreaFilters} />
-      <p>Types : {typeFilters}</p>
-      <p>Zones : {areaFilters}</p>
     </div>
-    <div id="pokedexList" className='filterContainer'>
-
+    <div id="searchResult">{searchResult(filteredPokedex)}</div>
+    <div id="pokedexList">
       <PokedexList tbPokedex={filteredPokedex} tbTypes={tbTypes} tbAreas={tbAreas} />
     </div>
   </>

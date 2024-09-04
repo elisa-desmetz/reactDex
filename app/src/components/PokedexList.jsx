@@ -1,10 +1,10 @@
 import slugify from "../../utils/slugify";
 
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion";
 
+import Gallery from "./Gallery";
 import Identity from "./Identity";
 import Type from "./images/Type";
-import Gallery from "./Gallery";
 
 export default function PokedexList({ tbPokedex, tbTypes, tbAreas }) {
     return (
