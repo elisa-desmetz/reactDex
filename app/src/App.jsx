@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence } from "framer-motion"
 
 import slugify from '../utils/slugify'
 import supabase from '../utils/supabase'
@@ -8,13 +9,12 @@ import PokedexList from './components/PokedexList'
 import FilterForm from './components/controller/FilterForm'
 
 function Page() {
-  const tbPokedex = loadDex()
-  const tbTypes = loadType()
-  const tbAreas = loadArea()
+  const { pokedex: tbPokedex, loading: loadingDex } = loadDex(); 
+  const { tbType: tbTypes, loading: loadingTypes } = loadType();
+  const { tbArea: tbAreas, loading: loadingAreas } = loadArea();
 
   const [typeFilters, setTypeFilters] = useState(new Set());
   const [areaFilters, setAreaFilters] = useState(new Set());
-  const [textSearch, setTextSearch] = useState("")
 
   function updateTypeFilters(checked, typeFilter) {
     if (checked)
@@ -38,10 +38,6 @@ function Page() {
       });
   }
 
-  function updateTextSearch(value) {
-    setTextSearch(value)
-  }
-
   const filteredPokedex = tbPokedex.filter((pokemon) => {
     const pokemonTypes = new Set(Object.values(pokemon.reg_type))
     return (
@@ -49,33 +45,25 @@ function Page() {
         areaFilters.has(pokemon.area_id)) &&
       (typeFilters.size === 0 ||
         pokemonTypes.isSupersetOf(typeFilters)
-      ) && 
-      ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
       )
     );
   });
 
-  const searchResultDetail = (pokedex) => {
-    if (pokedex.length === 0)
-      return "Aucun résultat."
-    else if (pokedex.length === 1)
-      return "1 espèce recensée."
-    else
-      return `${pokedex.length} espèces recensées.`
+  if (loadingDex || loadingTypes || loadingAreas) {
+    return <div>Chargement...</div>;
   }
 
   return (<>
     <div id="filters">
-      <FilterForm
-        tables={{ type: tbTypes, area: tbAreas }}
-        onChange={{ type: updateTypeFilters, area: updateAreaFilters, text: updateTextSearch }}
-      />
+      <FilterForm tbTypes={tbTypes} tbArea={tbAreas} onTypeChange={updateTypeFilters} onAreaChange={updateAreaFilters} />
+      <p>Types : {typeFilters}</p>
+      <p>Zones : {areaFilters}</p>
     </div>
-    <div id="searchResult">{searchResultDetail(filteredPokedex)}</div>
-    <div id="pokedexList">
-      <PokedexList
-        tables={{ pokedex: filteredPokedex, type: tbTypes, area: tbAreas }}
-      />
+    <div id="pokedexList" className='filterContainer'>
+
+      <AnimatePresence>
+        <PokedexList tbPokedex={filteredPokedex} tbTypes={tbTypes} tbAreas={tbAreas} />
+      </AnimatePresence>
     </div>
   </>
   )
@@ -85,6 +73,7 @@ export default Page
 
 function loadDex() {
   const [pokedex, setPokedex] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getPokedex() {
@@ -106,19 +95,21 @@ function loadDex() {
         .order("forme")
       //.lt("pokedex_id", 4)
 
-      if (pokedex.length > 1) {
+      if (pokedex) {
         setPokedex(pokedex)
       }
+      setLoading(false);
     }
 
     getPokedex()
   }, [])
 
-  return pokedex
+  return { pokedex, loading };
 }
 
 function loadType() {
   const [tbType, setTypes] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getTypes() {
@@ -137,6 +128,7 @@ function loadType() {
       if (tbType.length > 1) {
         setTypes(tbType)
       }
+      setLoading(false);
     }
 
     getTypes()
@@ -149,11 +141,12 @@ function loadType() {
     root.style.setProperty("--color-" + name, `rgb(${type.rgb})`);
   });
 
-  return tbType
+  return { tbType, loading };
 }
 
 function loadArea() {
   const [tbArea, setAreas] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getAreas() {
@@ -169,10 +162,11 @@ function loadArea() {
       if (tbArea.length > 1) {
         setAreas(tbArea)
       }
+      setLoading(false);
     }
 
     getAreas()
   }, [])
 
-  return tbArea
+  return { tbArea, loading };
 }
