@@ -15,22 +15,25 @@ function Page() {
 
   // Filtres
   const initialState = {
-    type : new Set(),
-    area : new Set(),
-    generation : new Set(),
-    text : '',
-  }
+    type: new Set(),
+    area: new Set(),
+    generation: new Set(),
+    region: null,
+    text: '',
+  };
 
   const [typeFilters, setTypeFilters] = useState(initialState.type);
   const [areaFilters, setAreaFilters] = useState(initialState.area);
   const [generationFilters, setGenerationFilters] = useState(initialState.generation);
-  const [textSearch, setTextSearch] = useState(initialState.text)
+  const [regionFilters, setRegionFilters] = useState(initialState.region);
+  const [textSearch, setTextSearch] = useState(initialState.text);
 
-  function resetForm (){
-    setTypeFilters(initialState.type)
-    setAreaFilters(initialState.area)
-    setGenerationFilters(initialState.generation)
-    setTextSearch(initialState.text)
+  function resetForm() {
+    setTypeFilters(initialState.type);
+    setAreaFilters(initialState.area);
+    setGenerationFilters(initialState.generation);
+    setRegionFilters(initialState.region);
+    setTextSearch(initialState.text);
   }
 
   /**
@@ -40,15 +43,17 @@ function Page() {
    * @param {number} typeFilter 
    */
   function updateTypeFilter(checked, typeFilter) {
-    console.debug(checked)
-    if (checked)
+    console.debug(checked);
+    if (checked) {
       setTypeFilters((prev) => new Set(prev).add(typeFilter));
-    if (!checked)
+    }
+    if (!checked) {
       setTypeFilters((prev) => {
         const next = new Set(prev);
         next.delete(typeFilter);
         return next;
       });
+    }
   }
 
   /**
@@ -58,14 +63,16 @@ function Page() {
    * @param {number} areaFilter 
    */
   function updateAreaFilter(checked, areaFilter) {
-    if (checked)
+    if (checked) {
       setAreaFilters((prev) => new Set(prev).add(areaFilter));
-    if (!checked)
+    }
+    if (!checked) {
       setAreaFilters((prev) => {
         const next = new Set(prev);
         next.delete(areaFilter);
         return next;
       });
+    }
   }
 
   /**
@@ -75,14 +82,16 @@ function Page() {
    * @param {number} generationFilter 
    */
   function updateGenerationFilter(checked, generationFilter) {
-    if (checked)
+    if (checked) {
       setGenerationFilters((prev) => new Set(prev).add(generationFilter));
-    if (!checked)
+    }
+    if (!checked) {
       setGenerationFilters((prev) => {
         const next = new Set(prev);
         next.delete(generationFilter);
-        return next
+        return next;
       });
+    }
   }
 
   /**
@@ -91,25 +100,28 @@ function Page() {
    * @param {string} value 
    */
   function updateTextSearch(value) {
-    setTextSearch(value)
+    setTextSearch(value);
   }
 
   // Filtrer le pokedex selon les critères de recherche
   const filteredPokedex = tbPokedex.filter((pokemon) => {
     // Récupération de la liste des types du pokemon pour contrôle
-    const pokemonTypes = new Set(Object.values(pokemon.reg_type))
+    const pokemonTypes = new Set(Object.values(pokemon.reg_type));
 
     return (
       // Filtre sur la zone de capture
       (areaFilters.size === 0 ||
         areaFilters.has(pokemon.area_id)) &&
+
       // Filtre sur le type
       (typeFilters.size === 0 ||
         pokemonTypes.isSupersetOf(typeFilters)
       ) &&
+
       // Filtre recherche textuelle sur le nom
       ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
       ) &&
+
       // Filtre sur la génération
       (generationFilters.size === 0 ||
         generationFilters.has(pokemon.gen)
@@ -119,12 +131,15 @@ function Page() {
 
   // Calculer le nombre de résultat et générer la phrase à afficher.
   const searchResultDetail = (pokedex) => {
-    if (pokedex.length === 0)
-      return "Aucun résultat."
-    else if (pokedex.length === 1)
-      return "1 espèce recensée."
-    else
-      return `${pokedex.length} espèces recensées.`
+    if (pokedex.length === 0) {
+      return "Aucun résultat.";
+    }
+    else if (pokedex.length === 1) {
+      return "1 espèce recensée.";
+    }
+    else {
+      return `${pokedex.length} espèces recensées.`;
+    }
   }
 
   // Contrôler le chargement des tables.
@@ -162,7 +177,8 @@ function Page() {
   </>
   )
 }
-export default Page
+
+export default Page;
 
 /**
  * Charger le pokedex depuis la base de données.
@@ -170,8 +186,8 @@ export default Page
  * @returns Le pokedex et l'état de chargement.
  */
 function loadDex() {
-  const [pokedex, setPokedex] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [pokedex, setPokedex] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getPokedex() {
@@ -194,15 +210,15 @@ function loadDex() {
       //.lt("pokedex_id", 4)
 
       if (pokedex) {
-        setPokedex(pokedex)
+        setPokedex(pokedex);
       }
       setLoading(false);
     }
 
-    getPokedex()
+    getPokedex();
   }, [])
 
-  return { pokedex, loading }
+  return { pokedex, loading };
 }
 
 /**
@@ -211,8 +227,8 @@ function loadDex() {
  * @returns La table des types et l'état de chargement.
  */
 function loadType() {
-  const [tbType, setTypes] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [tbType, setTypes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getTypes() {
@@ -229,22 +245,23 @@ function loadType() {
         .lt("id_type", 19);
 
       if (tbType) {
-        setTypes(tbType)
+        setTypes(tbType);
       }
-      setLoading(false)
+      setLoading(false);
     }
 
-    getTypes()
+    getTypes();
   }, [])
 
   // Création des variables couleur à partir de la liste des types
   const root = document.documentElement;
+
   tbType.forEach((type) => {
     let name = slugify(type.name);
     root.style.setProperty("--color-" + name, `rgb(${type.rgb})`);
   });
 
-  return { tbType, loading }
+  return { tbType, loading };
 }
 
 /**
@@ -253,8 +270,8 @@ function loadType() {
  * @returns Les zones de capture et l'état de chargement.
  */
 function loadArea() {
-  const [tbArea, setAreas] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [tbArea, setAreas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getAreas() {
@@ -268,13 +285,13 @@ function loadArea() {
         .order("id")
 
       if (tbArea) {
-        setAreas(tbArea)
+        setAreas(tbArea);
       }
-      setLoading(false)
+      setLoading(false);
     }
 
-    getAreas()
+    getAreas();
   }, [])
 
-  return { tbArea, loading }
+  return { tbArea, loading };
 }
