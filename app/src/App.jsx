@@ -78,9 +78,9 @@ function Page() {
     if (checked)
       setGenerationFilters((prev) => new Set(prev).add(generationFilter));
     if (!checked)
-      setAreaFilters((prev) => {
+      setGenerationFilters((prev) => {
         const next = new Set(prev);
-        next.delete(areaFilter);
+        next.delete(generationFilter);
         return next
       });
   }
@@ -109,6 +109,10 @@ function Page() {
       ) &&
       // Filtre recherche textuelle sur le nom
       ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
+      ) &&
+      // Filtre sur la génération
+      (generationFilters.size === 0 ||
+        generationFilters.has(pokemon.gen)
       )
     );
   });

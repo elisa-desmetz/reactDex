@@ -1,19 +1,137 @@
+#filterForm {
+  display:grid;
+}
+
+#miscFilter {
+  grid-area:1/1;
+  display:flex;
+  flex-flow: row wrap;
+  gap:10px;
+  padding:10px;
+  background-color:rgba(210,210,210,1);
+  justify-content: space-between;
+  border-bottom: solid 2px rgba(150,150,150,0.1);
+}
+
+/* Zone des filtres type */
+#typesFilter {
+  grid-area:2/1;
+}
+
+
+/* Zone des filtres zone */
+#areasFilter {
+  grid-area:3/1;
+}
+
 #btnReset {
-  grid-area:1/4;
-  width:100px;
-  height:32px;
-  background:rgba(100,100,100,0.7);
-  color:ghostwhite;
-  border-radius:10px;
-  border:none;
-  font-family:var(--font-condensed);
-  font-size:16px;
-  cursor:pointer
+  grid-area: 1/4;
+  width: 100px;
+  height: 32px;
+  background: rgba(100, 100, 100, 0.7);
+  color: ghostwhite;
+  border-radius: 10px;
+  border: none;
+  font-family: var(--font-condensed);
+  font-size: 16px;
+  cursor: pointer
 }
 
 #btnReset:hover {
   box-shadow: inset 0 0 5px rgba(240, 240, 240, 0.8);
-  background-color:rgba(100,100,100,1);
+  background-color: rgba(100, 100, 100, 1);
+}
+
+/*
+----------
+COMMON
+----------
+*/
+
+.titleFilter {
+  grid-area: 1/1;
+  font-family: var(--font-condensed);
+  font-variant-caps: small-caps;
+  font-size: 25px;
+  font-weight: 600;
+  height: 32px;
+  color: rgba(0, 0, 0, 0.7);
+  align-self: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px 0 0 10px;
+  padding: 0px 8px;
+}
+
+.titleFilter:after {
+  content: ":";
+  font-size: 18px;
+}
+
+.hiddenInput {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  /* For iOS < 15 to remove gradient background */
+  background-color: #fff;
+  /* Not removed via appearance */
+  margin: 0;
+}
+
+.lbFilter {
+  display: flex;
+}
+
+.lbFilter:hover input~.btn.gen {
+  box-shadow: inset 0 0 5px rgba(22, 22, 22, 0.2);
+}
+
+.lbFilter:hover .hiddenInput:not(:checked)~.btn:not(.gen) {
+  box-shadow: inset 0 0 5px rgba(22, 22, 22, 0.3),
+  0 0 10px rgba(255,255,255,0.5);
+}
+
+.lbFilter:hover .hiddenInput:checked~.btn:not(.gen) {
+  box-shadow:
+    inset -4px 0 4px rgba(22, 22, 22, 0.7),
+    inset 4px 0 4px rgba(22, 22, 22, 0.7),
+    0 0 10px rgba(255,255,255,0.5);
+}
+
+.lbFilter input:checked~.btn.gen {
+  background:
+    linear-gradient(rgba(22, 22, 22, 0.2) 1px,
+      transparent 5px 100%),
+    linear-gradient(360deg,
+      rgba(22, 22, 22, 0.2) 1px,
+      transparent 5px 100%),
+    linear-gradient(rgba(222, 222, 222, 0.1) 0% 100%),
+    ghostwhite;
+}
+
+.lbFilter input:checked~.btn:not(.gen) {
+  box-shadow:
+    inset -4px 0 4px rgba(0, 0, 0, 0.5),
+    inset 4px 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.btn{
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn.filter {
+  padding: 5px 15px;
+  height: 28px;
+  border-radius: 19px / 50%;
+
+  align-self: center;
+
 }
 
 /*
@@ -31,53 +149,16 @@ FILTRE TYPES
   background-color: rgba(222, 222, 222, 0.8);
 }
 
-.lbType {
-  display: flex;
-}
-
-.lbType input {
-  /* Add if not using autoprefixer */
-  -webkit-appearance: none;
-  appearance: none;
-  /* For iOS < 15 to remove gradient background */
-  background-color: #fff;
-  /* Not removed via appearance */
-  margin: 0;
-}
-
-.btnType {
-  cursor: pointer;
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: rgba(222, 222, 222, 1);
-  padding: 5px;
-  height: 28px;
-  width: 100px;
-  border-radius: 19px / 50%;
-  display: grid;
-  align-self: center;
-}
-
-.lbType:hover input~.btnType {
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 1);
-}
-
-.lbType input:checked~.btnType {
-  box-shadow: inset -4px 0 4px rgba(0, 0, 0, 0.8), inset 4px 0 4px rgba(0, 0, 0, 0.8);
-}
-
-.btnType>img {
-  grid-area: 1/1;
+.btn.filter.type>img {
   width: 28px;
 }
 
-.btnType>div {
-  grid-area: 1/2;
-  align-self: center;
+.btn.filter.type>div {
   color: rgba(0, 0, 0, 0.7);
   font-weight: 650;
   font-size: 18px;
   font-variant-caps: small-caps;
+  margin-right: 7px;
 }
 
 /*
@@ -96,67 +177,10 @@ FILTRE ZONES
   color: rgba(0, 0, 0, 0.8);
 }
 
-.lbArea {
-  display: flex;
-}
-
-.lbArea input {
-  /* Add if not using autoprefixer */
-  -webkit-appearance: none;
-  appearance: none;
-  /* For iOS < 15 to remove gradient background */
-  background-color: #fff;
-  /* Not removed via appearance */
-  margin: 0;
-}
-
-.btnArea {
-  cursor: pointer;
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: rgba(222, 222, 222, 1);
-  padding: 5px 15px;
-  height: 28px;
-  border-radius: 19px / 50%;
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.btn.filter.area {
   background-color: ghostwhite;
 }
 
-.lbArea:hover input~.btnArea {
-  box-shadow: inset 0 0 5px rgba(22, 22, 22, 0.2);
-}
-
-.lbArea input:checked~.btnArea {
-  box-shadow: inset -4px 0 4px rgba(0, 0, 0, 0.5), inset 4px 0 4px rgba(0, 0, 0, 0.5);
-}
-
-/*
-----------
-COMMON
-----------
-*/
-
-.desc{
-  grid-area:1/1;
-  font-family: var(--font-condensed);  
-  font-variant-caps: small-caps;
-  font-size: 25px;
-  font-weight:600;
-  height:32px;
-  color: rgba(0,0,0,0.7);
-  align-self:center;
-  background-color:rgba(255,255,255,0.7);
-  border-radius: 10px 0 0 10px;
-  padding: 0px 8px;
-}
-
-.desc:after{
-  content:":";
-  font-size:18px;
-}
 
 /*
 ----------
@@ -164,7 +188,7 @@ SEARCHBAR
 ----------
 */
 
-#quicksearch {
+#textSearch {
   grid-area: 1/1;
   display: grid;
   grid-template-columns: min-content auto min-content;
@@ -197,46 +221,32 @@ SEARCHBAR
   outline: none;
 }
 
-#textfield::-webkit-search-cancel-button{
+#textfield::-webkit-search-cancel-button {
   -webkit-appearance: none;
   height: 20px;
   width: 20px;
-  border-radius:10px;
+  border-radius: 10px;
   border-radius: 50%;
   background:
     radial-gradient(transparent 50%, rgba(100, 100, 100, 0.7) 50%),
-    linear-gradient(45deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
-    linear-gradient(135deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
+    linear-gradient(45deg, transparent 43%, ghostwhite 48%, ghostwhite 52%, transparent 57%, transparent 100%),
+    linear-gradient(135deg, transparent 43%, ghostwhite 48%, ghostwhite 52%, transparent 57%, transparent 100%),
     radial-gradient(transparent 50%, ghostwhite 50%),
     rgba(100, 100, 100, 0.7);
 }
 
-#textfield::-webkit-search-cancel-button:hover{
+#textfield::-webkit-search-cancel-button:hover {
   -webkit-appearance: none;
   height: 20px;
   width: 20px;
-  border-radius:10px;
+  border-radius: 10px;
   border-radius: 50%;
   background:
     radial-gradient(transparent 50%, rgba(100, 100, 100, 1) 50%),
-    linear-gradient(45deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
-    linear-gradient(135deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
+    linear-gradient(45deg, transparent 43%, ghostwhite 48%, ghostwhite 52%, transparent 57%, transparent 100%),
+    linear-gradient(135deg, transparent 43%, ghostwhite 48%, ghostwhite 52%, transparent 57%, transparent 100%),
     radial-gradient(transparent 50%, ghostwhite 50%),
     rgba(100, 100, 100, 1);
-}
-
-.searchReset {
-  grid-area: 1/3;
-
-  height: 32px;
-  padding: 1px 7px;
-  width: 20px;
-
-  border: none;
-  border-radius: 0 10px 10px 0;
-  background: ghostwhite;
-
-  display: flex;
 }
 
 /*
@@ -245,84 +255,28 @@ FILTRE GEN
 ----------
 */
 
-#gen_div {
+#generationFilter {
   grid-area: 1/2;
-  display: inline-grid;
-  grid-template-columns: fit-content(160px) repeat(9, 45px);
+  display: flex;
+  flex-wrap: nowrap;
+  grid-template-columns: min-content repeat(9, 45px);
   font-variant-caps: small-caps;
   align-content: space-between;
 }
 
-.gen_desc {
-  grid-area: 1/1;
-  font-family: var(--font-condensed);
-  font-variant-caps: small-caps;
-  font-size: 25px;
-  font-weight: 600;
-  height: 32px;
-  color: rgba(0, 0, 0, 0.7);
-  align-self: center;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 10px 0 0 10px;
-  padding: 1px 2px 1px 8px;
-  min-width: 110px;
-}
-
-.gen_desc:after {
-  content: " :";
-  font-size: 18px;
-}
-
-#gen_div label:last-child .gen_ck {
+#generationFilter .lbFilter:last-child .btn.gen {
   border-radius: 0 10px 10px 0;
 }
 
-.gen_lb {
-  display: flex;
-}
-
-.gen_lb input {
-  /* Add if not using autoprefixer */
-  -webkit-appearance: none;
-  appearance: none;
-  /* For iOS < 15 to remove gradient background */
-  background-color: #fff;
-  /* Not removed via appearance */
-  margin: 0;
-}
-
-.gen_ck {
-  display: grid;
-  align-items: end;
-  justify-self: stretch;
+.btn.gen {
   font-family: var(--font-sans);
+  font-variant-caps: small-caps;
   font-weight: 550;
   font-size: 18px;
 
-  cursor: pointer;
-  -webkit-appearance: none;
-  appearance: none;
   background: ghostwhite;
   width: 45px;
-  height: 29px;
-  text-align: center;
-  padding-bottom: 5px;
-}
-
-.gen_lb:hover input~.gen_ck {
-  box-shadow: inset 0 0 5px rgba(22, 22, 22, 0.2);
-}
-
-.gen_lb input:checked~.gen_ck {
-
-  background:
-    linear-gradient(rgba(22, 22, 22, 0.3) 1px,
-      transparent 5px 100%),
-    linear-gradient(360deg,
-      rgba(22, 22, 22, 0.3) 1px,
-      transparent 5px 100%),
-    linear-gradient(rgba(222, 222, 222, 0.1) 0% 100%),
-    ghostwhite;
+  height: 32px;
 }
 
 /*

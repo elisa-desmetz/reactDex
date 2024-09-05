@@ -1,20 +1,24 @@
 import slugify from "../../../utils/slugify"
 import "../../assets/css/filters.css"
-import * as React from 'react';
-import { useEffect, useState } from 'react';
 
 
 // Créer la section de la page correspondant aux critères de recherche
 export default function FilterForm({ tables, reset, updater }) {
     return (
         <form id="filterForm">
-        <div id="miscFilter">
-            <MiscFilters
-                updater={{
-                    text: updater.text,
-                    generation: updater.generation
-                }} />
-            <button id="btnReset" type="reset" onClick={reset}>Reset</button>
+            <div id="miscFilter">
+                <MiscFilters
+                    updater={{
+                        text: updater.text,
+                        generation: updater.generation
+                    }} />
+                <button
+                    id="btnReset"
+                    type="reset"
+                    onClick={reset}
+                >
+                    Reset
+                </button>
             </div>
             <TypeFilter
                 tbTypes={tables.type}
@@ -29,31 +33,68 @@ export default function FilterForm({ tables, reset, updater }) {
 // Créer la section des critères divers : recherche textuelle, génération, région, bouton reset du formulaire
 function MiscFilters({ updater }) {
     return (
-            <div id="quicksearch">
-                <div className="desc">Nom&nbsp;</div>
-                <SearchField updater={updater.text} />
-            </div>
+        <>
+            <TextFilter updater={updater.text} />
+            <GenerationFilter updater={updater.generation} />
+        </>
     )
 }
 
-function SearchField({ updater }) {
+function TextFilter({ updater }) {
     return (
-        <>
-            <input id="textfield" type="search" placeholder="Rechercher"
+        <div id="textSearch">
+            <div className="titleFilter">Nom&nbsp;</div>
+            <input
+                id="textfield"
+                type="search"
+                placeholder="Rechercher"
                 onChange={(e) => {
                     updater(e.target.value)
-                }} />
-        </>
+                }}
+            />
+        </div>
     )
+}
+
+function GenerationFilter({ updater }) {
+    return (
+        <div id="generationFilter">
+            <div className="titleFilter">Génération&nbsp;</div>
+            {Array.from(Array(9), (e, i) => 
+                <GenerationButton value={i+1} key={i+1} updater={updater}/>
+            )}
+        </div>
+    )
+}
+
+function GenerationButton({value, updater}){
+    return (
+        <label className="lbFilter generation">
+            <input
+                className="hiddenInput"
+                type="checkbox"
+                onClick={(e) => updater(e.target.checked, value)}
+            />
+            <div className="btn gen">
+                {value + 'g'}
+            </div>
+        </label>
+)
 }
 
 function TypeFilter({ tbTypes, updater }) {
     return (
         <div id="typesFilter">
-            <Collapsible title={'Types'} />
+            <Collapsible
+                title={'Types'}
+            />
             <div id="typeButtonList">
                 {tbTypes.map((type) => (
-                    <TypeButton key={slugify(type.name)} updater={updater} type={type} />
+                    <TypeButton
+                        key={slugify(type.name)}
+                        updater={updater}
+                        type={type}
+                    />
                 ))}
             </div>
         </div>
@@ -62,11 +103,20 @@ function TypeFilter({ tbTypes, updater }) {
 
 function TypeButton({ type, updater }) {
     return (
-        <label className="lbType">
-            <input type="checkbox" onClick={(e) => updater(e.target.checked, type.id_type)} />
-            <div className="btnType" style={{ backgroundColor: 'var(--color-' + slugify(type.name) + ')' }}>
+        <label className="lbFilter">
+            <input
+                className="hiddenInput"
+                type="checkbox"
+                onClick={(e) => updater(e.target.checked, type.id_type)}
+            />
+            <div
+                className="btn filter type"
+                style={{ backgroundColor: 'var(--color-' + slugify(type.name) + ')' }}
+            >
                 <img src={type.icon_mini} />
-                <div>{type.name}</div>
+                <div>
+                    {type.name}
+                </div>
             </div>
         </label>
     )
@@ -75,10 +125,16 @@ function TypeButton({ type, updater }) {
 function AreaFilter({ tbArea, updater }) {
     return (
         <div id="areasFilter">
-            <Collapsible title={'Zone de Capture'} />
+            <Collapsible
+                title={'Zone de Capture'}
+            />
             <div id="areaButtonList">
                 {tbArea.filter((area) => area.id > 0).map((area) => (
-                    <AreaButton key={area.id} area={area} updater={updater} />
+                    <AreaButton
+                        key={area.id}
+                        area={area}
+                        updater={updater}
+                    />
                 ))}
             </div>
         </div>
@@ -87,9 +143,15 @@ function AreaFilter({ tbArea, updater }) {
 
 function AreaButton({ area, updater }) {
     return (
-        <label className="lbArea">
-            <input type="checkbox" onClick={(e) => updater(e.target.checked, area.id)} />
-            <div className="btnArea">{area.name}</div>
+        <label className="lbFilter">
+            <input
+                className="hiddenInput"
+                type="checkbox"
+                onClick={(e) => updater(e.target.checked, area.id)}
+            />
+            <div className="btn filter area">
+                {area.name}
+            </div>
         </label>
     )
 }
