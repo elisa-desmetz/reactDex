@@ -166,7 +166,8 @@ CARD
     display : flex;
     flex-flow:row;
     align-items: center;
-    column-gap: 5px;}
+    column-gap: 5px;
+    margin:0px 5px;}
     
   .types img {
     width: 100px;

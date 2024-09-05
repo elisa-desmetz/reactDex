@@ -3,45 +3,46 @@ import "../../assets/css/filters.css"
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
-export default function FilterForm({ tables, onChange }) {
+
+// Créer la section de la page correspondant aux critères de recherche
+export default function FilterForm({ tables, reset, onChange }) {
     return (
         <form id="filterForm">
-            <MiscFilters onChange={{ text: onChange.text }} />
-            <TypeFilter tbTypes={tables.type} onChange={onChange.type} />
-            <AreaFilter tbArea={tables.area} onChange={onChange.area} />
+        <div id="miscFilter">
+            <MiscFilters
+                onChange={{
+                    text: onChange.text,
+                    generation: onChange.generation
+                }} />
+            <button id="btnReset" type="reset" onClick={reset}>Reset</button>
+            </div>
+            <TypeFilter
+                tbTypes={tables.type}
+                onChange={onChange.type} />
+            <AreaFilter
+                tbArea={tables.area}
+                onChange={onChange.area} />
         </form>
     )
 }
 
+// Créer la section des critères divers : recherche textuelle, génération, région, bouton reset du formulaire
 function MiscFilters({ onChange }) {
     return (
-        <div id="miscFilter">
             <div id="quicksearch">
                 <div className="desc">Nom&nbsp;</div>
                 <SearchField onChange={onChange.text} />
             </div>
-        </div>
     )
 }
 
 function SearchField({ onChange }) {
-    const [tfValue, setTfValue] = useState('')
-
     return (
         <>
-            <input className="textfield" value={tfValue} type="text" placeholder="Rechercher"
+            <input id="textfield" type="search" placeholder="Rechercher"
                 onChange={(e) => {
-                    setTfValue(e.target.value)
                     onChange(e.target.value)
                 }} />
-            <div className="searchReset">
-                {tfValue.length != 0 &&
-                    <div id="btnReset" onClick={() => {
-                        setTfValue('')
-                        onChange('')
-                    }}>✖</div>
-                }
-            </div>
         </>
     )
 }

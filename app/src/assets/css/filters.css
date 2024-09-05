@@ -1,3 +1,21 @@
+#btnReset {
+  grid-area:1/4;
+  width:100px;
+  height:32px;
+  background:rgba(100,100,100,0.7);
+  color:ghostwhite;
+  border-radius:10px;
+  border:none;
+  font-family:var(--font-condensed);
+  font-size:16px;
+  cursor:pointer
+}
+
+#btnReset:hover {
+  box-shadow: inset 0 0 5px rgba(240, 240, 240, 0.8);
+  background-color:rgba(100,100,100,1);
+}
+
 /*
 ----------
 FILTRE TYPES
@@ -132,7 +150,7 @@ COMMON
   align-self:center;
   background-color:rgba(255,255,255,0.7);
   border-radius: 10px 0 0 10px;
-  padding: 1px 8px;
+  padding: 0px 8px;
 }
 
 .desc:after{
@@ -153,7 +171,7 @@ SEARCHBAR
   font-size: 18px;
 }
 
-.textfield {
+#textfield {
   grid-area: 1/2;
   align-self: center;
 
@@ -165,17 +183,46 @@ SEARCHBAR
   padding: 1px 10px;
 
   border: none;
+  border-radius: 0 10px 10px 0;
 
   color: rgba(0, 0, 0, 0.4);
   background: ghostwhite;
 }
 
-.textfield::placeholder {
+#textfield::placeholder {
   color: rgba(0, 0, 0, 0.4);
 }
 
-.textfield:focus {
+#textfield:focus {
   outline: none;
+}
+
+#textfield::-webkit-search-cancel-button{
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius:10px;
+  border-radius: 50%;
+  background:
+    radial-gradient(transparent 50%, rgba(100, 100, 100, 0.7) 50%),
+    linear-gradient(45deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
+    linear-gradient(135deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
+    radial-gradient(transparent 50%, ghostwhite 50%),
+    rgba(100, 100, 100, 0.7);
+}
+
+#textfield::-webkit-search-cancel-button:hover{
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius:10px;
+  border-radius: 50%;
+  background:
+    radial-gradient(transparent 50%, rgba(100, 100, 100, 1) 50%),
+    linear-gradient(45deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
+    linear-gradient(135deg, transparent 43%,ghostwhite 48%,ghostwhite 52%,transparent 57%,transparent 100%),
+    radial-gradient(transparent 50%, ghostwhite 50%),
+    rgba(100, 100, 100, 1);
 }
 
 .searchReset {
@@ -190,24 +237,6 @@ SEARCHBAR
   background: ghostwhite;
 
   display: flex;
-}
-
-#btnReset {
-  align-self: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: rgba(100, 100, 100, 0.7);
-  color: ghostwhite;
-  font-size: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-#btnReset:hover {
-  background-color: rgba(100, 100, 100, 1);
 }
 
 /*

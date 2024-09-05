@@ -8,15 +8,38 @@ import PokedexList from './components/PokedexList'
 import FilterForm from './components/controller/FilterForm'
 
 function Page() {
-  const { pokedex: tbPokedex, loading: loadingDex } = loadDex(); 
+  // Chargement des tables
+  const { pokedex: tbPokedex, loading: loadingDex } = loadDex();
   const { tbType: tbTypes, loading: loadingTypes } = loadType();
   const { tbArea: tbAreas, loading: loadingAreas } = loadArea();
 
-  const [typeFilters, setTypeFilters] = useState(new Set());
-  const [areaFilters, setAreaFilters] = useState(new Set());
-  const [textSearch, setTextSearch] = useState("")
+  // Filtres
+  const initialState = {
+    type : new Set(),
+    area : new Set(),
+    generation : new Set(),
+    text : '',
+  }
 
-  function updateTypeFilters(checked, typeFilter) {
+  const [typeFilters, setTypeFilters] = useState(initialState.type);
+  const [areaFilters, setAreaFilters] = useState(initialState.area);
+  const [generationFilters, setGenerationFilters] = useState(initialState.generation);
+  const [textSearch, setTextSearch] = useState(initialState.text)
+
+  function resetForm (){
+    setTypeFilters(initialState.type)
+    setAreaFilters(initialState.area)
+    setGenerationFilters(initialState.generation)
+    setTextSearch(initialState.text)
+  }
+
+  /**
+   * Mettre à jour le filtre sur le type.
+   * 
+   * @param {boolean} checked 
+   * @param {number} typeFilter 
+   */
+  function updateTypeFilter(checked, typeFilter) {
     if (checked)
       setTypeFilters((prev) => new Set(prev).add(typeFilter));
     if (!checked)
@@ -27,7 +50,13 @@ function Page() {
       });
   }
 
-  function updateAreaFilters(checked, areaFilter) {
+  /**
+   * Mettre à jour le filtre sur la zone de capture.
+   * 
+   * @param {boolean} checked 
+   * @param {number} areaFilter 
+   */
+  function updateAreaFilter(checked, areaFilter) {
     if (checked)
       setAreaFilters((prev) => new Set(prev).add(areaFilter));
     if (!checked)
@@ -38,23 +67,52 @@ function Page() {
       });
   }
 
+  /**
+   * Mettre à jour le filtre sur la génération.
+   * 
+   * @param {boolean} checked 
+   * @param {number} generationFilter 
+   */
+  function updateGenerationFilter(checked, generationFilter) {
+    if (checked)
+      setGenerationFilters((prev) => new Set(prev).add(generationFilter));
+    if (!checked)
+      setAreaFilters((prev) => {
+        const next = new Set(prev);
+        next.delete(areaFilter);
+        return next
+      });
+  }
+
+  /**
+   * Mettre à jour le filtre de recherche textuelle.
+   * 
+   * @param {string} value 
+   */
   function updateTextSearch(value) {
     setTextSearch(value)
   }
 
+  // Filtrer le pokedex selon les critères de recherche
   const filteredPokedex = tbPokedex.filter((pokemon) => {
+    // Récupération de la liste des types du pokemon pour contrôle
     const pokemonTypes = new Set(Object.values(pokemon.reg_type))
+
     return (
+      // Filtre sur la zone de capture
       (areaFilters.size === 0 ||
         areaFilters.has(pokemon.area_id)) &&
+      // Filtre sur le type
       (typeFilters.size === 0 ||
         pokemonTypes.isSupersetOf(typeFilters)
-      ) && 
+      ) &&
+      // Filtre recherche textuelle sur le nom
       ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
       )
     );
   });
 
+  // Calculer le nombre de résultat et générer la phrase à afficher.
   const searchResultDetail = (pokedex) => {
     if (pokedex.length === 0)
       return "Aucun résultat."
@@ -64,20 +122,36 @@ function Page() {
       return `${pokedex.length} espèces recensées.`
   }
 
+  // Contrôler le chargement des tables.
   if (loadingDex || loadingTypes || loadingAreas) {
     return <div>Chargement...</div>;
   }
+
+  // Structure de la page
   return (<>
     <div id="filters">
       <FilterForm
-        tables={{ type: tbTypes, area: tbAreas }}
-        onChange={{ type: updateTypeFilters, area: updateAreaFilters, text: updateTextSearch }}
+        tables={{
+          type: tbTypes,
+          area: tbAreas
+        }}
+        reset={resetForm}
+        onChange={{
+          type: updateTypeFilter,
+          area: updateAreaFilter,
+          text: updateTextSearch,
+          generation: updateGenerationFilter
+        }}
       />
     </div>
     <div id="searchResult">{searchResultDetail(filteredPokedex)}</div>
     <div id="pokedexList">
       <PokedexList
-        tables={{ pokedex: filteredPokedex, type: tbTypes, area: tbAreas }}
+        tables={{
+          pokedex: filteredPokedex,
+          type: tbTypes,
+          area: tbAreas
+        }}
       />
     </div>
   </>
@@ -85,9 +159,13 @@ function Page() {
 }
 export default Page
 
-
+/**
+ * Charger le pokedex depuis la base de données.
+ * 
+ * @returns Le pokedex et l'état de chargement.
+ */
 function loadDex() {
-  const [pokedex, setPokedex] = useState([])  
+  const [pokedex, setPokedex] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -122,6 +200,11 @@ function loadDex() {
   return { pokedex, loading }
 }
 
+/**
+ * Charger la table des types depuis la base de données.
+ * 
+ * @returns La table des types et l'état de chargement.
+ */
 function loadType() {
   const [tbType, setTypes] = useState([])
   const [loading, setLoading] = useState(true)
@@ -159,8 +242,13 @@ function loadType() {
   return { tbType, loading }
 }
 
+/**
+ * Charger les zones de capture depuis la base de données.
+ * 
+ * @returns Les zones de capture et l'état de chargement.
+ */
 function loadArea() {
-  const [tbArea, setAreas] = useState([])  
+  const [tbArea, setAreas] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
