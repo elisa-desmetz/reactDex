@@ -1,5 +1,5 @@
 import slugify from "../../../utils/slugify"
-import "../../assets/css/filters.css"
+
 import Collapsible from "./Collapsible"
 
 

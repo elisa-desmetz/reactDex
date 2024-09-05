@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 
+import './assets/css/App.css'
+import './assets/css/card.css'
+import './assets/css/filters.css'
+import './assets/css/pokeball.css'
+
 import slugify from '../utils/slugify'
 import supabase from '../utils/supabase'
 
-import './assets/css/App.css'
+import FilterForm from './components/filter/FilterForm'
 import PokedexList from './components/PokedexList'
-import FilterForm from './components/controller/FilterForm'
 
 function Page() {
   // Chargement des tables
@@ -148,7 +152,7 @@ function Page() {
       // Filtre sur variant
       (variantFilters.size === 0 ||
         variantFilters.has(pokemon.variant)
-      ) 
+      )
     );
   });
 

@@ -2,9 +2,7 @@ import slugify from "../../utils/slugify";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import Gallery from "./Gallery";
-import Identity from "./Identity";
-import Type from "./images/Type";
+import Card from "./card/Card";
 
 export default function PokedexList({ tables }) {
     return (
@@ -23,22 +21,4 @@ export default function PokedexList({ tables }) {
                 ))}
             </AnimatePresence>
         </>)
-}
-
-function Card({ pokemon, tables }) {
-    const typeList = Object.entries(pokemon.reg_type);
-    const gallery = Object.entries(pokemon.reg_galerie);
-
-    return (
-        <div className="card">
-            <Identity name={{ fr: pokemon.name_fr, en: pokemon.name_en }} num={pokemon.pokedex_id} />
-            <div className="types">
-                {typeList.map((type) => (
-                    <Type key={type.at(0)} type={type.at(1)} tbTypes={tables.type} />
-                ))}
-            </div>
-            {/* .at(0) pour tester sur la premiere image sans avoir à implémenter le controller */}
-            <Gallery imgList={gallery.at(0)} />
-        </div>
-    )
 }
