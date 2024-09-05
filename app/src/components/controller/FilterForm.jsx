@@ -1,5 +1,6 @@
 import slugify from "../../../utils/slugify"
 import "../../assets/css/filters.css"
+import Collapsible from "./Collapsible"
 
 
 // Créer la section de la page correspondant aux critères de recherche
@@ -21,12 +22,16 @@ export default function FilterForm({ tables, reset, updater }) {
                     Reset
                 </button>
             </div>
-            <TypeFilter
-                tbTypes={tables.type}
-                updater={updater.type} />
-            <AreaFilter
-                tbArea={tables.area}
-                updater={updater.area} />
+            <Collapsible title={"Type"}>
+                <TypeFilter
+                    tbTypes={tables.type}
+                    updater={updater.type} />
+            </Collapsible>
+            <Collapsible title={"Zones de Capture"}>
+                <AreaFilter
+                    tbArea={tables.area}
+                    updater={updater.area} />
+            </Collapsible>
         </form>
     )
 }
@@ -89,7 +94,7 @@ function VariantFilter({ updater }) {
     return (
         <div id="variantFilter">
             <div className="titleFilter">Variant&nbsp;</div>
-            {tbRegions.map((region) => 
+            {tbRegions.map((region) =>
                 <VariantButton
                     key={slugify(region)}
                     region={{
@@ -120,9 +125,6 @@ function VariantButton({ region, updater }) {
 function TypeFilter({ tbTypes, updater }) {
     return (
         <div id="typesFilter">
-            <Collapsible
-                title={'Types'}
-            />
             <div id="typeButtonList">
                 {tbTypes.map((type) => (
                     <TypeButton
@@ -142,7 +144,11 @@ function TypeButton({ type, updater }) {
             <input
                 className="hiddenInput"
                 type="checkbox"
-                onClick={(e) => updater(e.target.checked, type.id_type)}
+                onClick={e => {
+                    e.stopPropagation();
+                    updater(e.target.checked, type.id_type)
+
+                }}
             />
             <div
                 className="btn filter type"
@@ -160,9 +166,6 @@ function TypeButton({ type, updater }) {
 function AreaFilter({ tbArea, updater }) {
     return (
         <div id="areasFilter">
-            <Collapsible
-                title={'Zone de Capture'}
-            />
             <div id="areaButtonList">
                 {tbArea.filter((area) => area.id > 0).map((area) => (
                     <AreaButton
@@ -191,8 +194,10 @@ function AreaButton({ area, updater }) {
     )
 }
 
+/*
 function Collapsible({ title }) {
     return (
         <div className="collapsible active">{title}</div>
     )
 }
+*/
