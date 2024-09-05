@@ -10,7 +10,8 @@ export default function FilterForm({ tables, reset, updater }) {
                 <MiscFilters
                     updater={{
                         text: updater.text,
-                        generation: updater.generation
+                        generation: updater.generation,
+                        variant: updater.variant,
                     }} />
                 <button
                     id="btnReset"
@@ -36,6 +37,7 @@ function MiscFilters({ updater }) {
         <>
             <TextFilter updater={updater.text} />
             <GenerationFilter updater={updater.generation} />
+            <VariantFilter updater={updater.variant} />
         </>
     )
 }
@@ -60,14 +62,14 @@ function GenerationFilter({ updater }) {
     return (
         <div id="generationFilter">
             <div className="titleFilter">Génération&nbsp;</div>
-            {Array.from(Array(9), (e, i) => 
-                <GenerationButton value={i+1} key={i+1} updater={updater}/>
+            {Array.from(Array(9), (e, i) =>
+                <GenerationButton value={i + 1} key={i + 1} updater={updater} />
             )}
         </div>
     )
 }
 
-function GenerationButton({value, updater}){
+function GenerationButton({ value, updater }) {
     return (
         <label className="lbFilter generation">
             <input
@@ -79,7 +81,40 @@ function GenerationButton({value, updater}){
                 {value + 'g'}
             </div>
         </label>
-)
+    )
+}
+
+function VariantFilter({ updater }) {
+    const tbRegions = ["Alola", "Galar", "Hisui", "Paldea"];
+    return (
+        <div id="variantFilter">
+            <div className="titleFilter">Variant&nbsp;</div>
+            {tbRegions.map((region) => 
+                <VariantButton
+                    key={slugify(region)}
+                    region={{
+                        name: region,
+                        value: tbRegions.indexOf(region) + 1
+                    }}
+                    updater={updater} />
+            )}
+        </div>
+    )
+}
+
+function VariantButton({ region, updater }) {
+    return (
+        <label className="lbFilter variant">
+            <input
+                className="hiddenInput"
+                type="checkbox"
+                onClick={(e) => updater(e.target.checked, region.value)}
+            />
+            <div className="btn var">
+                {region.name}
+            </div>
+        </label>
+    )
 }
 
 function TypeFilter({ tbTypes, updater }) {

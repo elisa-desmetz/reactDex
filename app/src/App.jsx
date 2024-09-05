@@ -18,21 +18,21 @@ function Page() {
     type: new Set(),
     area: new Set(),
     generation: new Set(),
-    region: null,
+    variant: new Set(),
     text: '',
   };
 
   const [typeFilters, setTypeFilters] = useState(initialState.type);
   const [areaFilters, setAreaFilters] = useState(initialState.area);
   const [generationFilters, setGenerationFilters] = useState(initialState.generation);
-  const [regionFilters, setRegionFilters] = useState(initialState.region);
+  const [variantFilters, setVariantFilters] = useState(initialState.variant);
   const [textSearch, setTextSearch] = useState(initialState.text);
 
   function resetForm() {
     setTypeFilters(initialState.type);
     setAreaFilters(initialState.area);
     setGenerationFilters(initialState.generation);
-    setRegionFilters(initialState.region);
+    setVariantFilters(initialState.variant);
     setTextSearch(initialState.text);
   }
 
@@ -95,6 +95,24 @@ function Page() {
   }
 
   /**
+   * Mettre à jour le filtre sur le variant
+   * @param {boolean} checked 
+   * @param {number} variantFilter 
+   */
+  function updateVariantFilter(checked, variantFilter) {
+    if (checked) {
+      setVariantFilters((prev) => new Set(prev).add(variantFilter));
+    }
+    if (!checked) {
+      setVariantFilters((prev) => {
+        const next = new Set(prev);
+        next.delete(variantFilter);
+        return next;
+      });
+    }
+  }
+
+  /**
    * Mettre à jour le filtre de recherche textuelle.
    * 
    * @param {string} value 
@@ -124,8 +142,13 @@ function Page() {
 
       // Filtre sur la génération
       (generationFilters.size === 0 ||
-        generationFilters.has(pokemon.gen)
-      )
+        generationFilters.has(pokemon.generation)
+      ) &&
+
+      // Filtre sur variant
+      (variantFilters.size === 0 ||
+        variantFilters.has(pokemon.variant)
+      ) 
     );
   });
 
@@ -159,8 +182,9 @@ function Page() {
         updater={{
           type: updateTypeFilter,
           area: updateAreaFilter,
+          generation: updateGenerationFilter,
+          variant: updateVariantFilter,
           text: updateTextSearch,
-          generation: updateGenerationFilter
         }}
       />
     </div>
@@ -193,19 +217,19 @@ function loadDex() {
     async function getPokedex() {
       const { data: pokedex } = await supabase.from("pokedex")
         .select(`pokedex_id,
-              region,
+              variant,
               forme,
               name_fr:  name->fr,
               name_en:  name->en,
               reg_type: regular->type,
               reg_galerie: regular->image,
-              gen,
+              generation,
               reg_discovered_by,
               area_id,
               desc`
         )
         .order("pokedex_id")
-        .order("region")
+        .order("variant")
         .order("forme")
       //.lt("pokedex_id", 4)
 
