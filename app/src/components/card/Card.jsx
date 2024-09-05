@@ -5,6 +5,8 @@ import Type from "./images/Type";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+import createCornerGradient from "../../../utils/createCornerGradient";
+
 export default function Card({ pokemon, tables }) {
     const [flip, setFlip] = useState(true);
     const neverEncountered = {
@@ -13,6 +15,7 @@ export default function Card({ pokemon, tables }) {
         areaImg: tables.area.at(0).img,
         description: "Cette espèce n'a pas encore été rencontrée."
     }
+
     return (
         <motion.div
             transition={{ duration: 0.7 }}
@@ -80,17 +83,23 @@ export default function Card({ pokemon, tables }) {
 function Front({ pokemon, types }) {
     const typeList = Object.entries(pokemon.reg_type);
     const gallery = Object.entries(pokemon.reg_galerie);
+    const cornerGradient = createCornerGradient(types, Object.values(pokemon.reg_type))
 
     return (
         <>
             <Identity name={{ fr: pokemon.name_fr, en: pokemon.name_en }} num={pokemon.pokedex_id} />
             <div className="types">
                 {typeList.map((type) => (
-                    <Type key={type.at(0)} type={type.at(1)} tbTypes={types} />
+                    <Type key={type[0]} type={type[1]} tbTypes={types} />
                 ))}
             </div>
             {/* .at(0) pour tester sur la premiere image sans avoir à implémenter le controller */}
             <Gallery imgList={gallery.at(0)} />
+            <div className="bottom">
+                <div className="corner" style={{background:cornerGradient}}>
+
+                </div>
+            </div>
         </>
     )
 }

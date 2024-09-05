@@ -32,7 +32,7 @@ CARD
     box-sizing: border-box;
     background-size: 100%;
 
-    color:black;
+    color: black;
 
     .areaName {
         grid-area: 1 / 1;
@@ -73,7 +73,7 @@ CARD
     height: 100%;
     display: grid;
     grid-template-columns: 75px 2fr 100px;
-    grid-template-rows: 50px 25px 30px 70px;
+    grid-template-rows: 50px 25px 30px 70px 50px;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     background-color: #DEDEDE;
@@ -129,6 +129,37 @@ CARD
 
     .galleryControl {
         grid-area: 4 / 1 / 5 / 3;
-        background-color: forestgreen;
     }
+
+    .bottom {
+        grid-area: 5 / 1 / 5 / 4;
+        margin: -5px;
+        margin-top: 5px;
+        display:flex;
+        flex-direction: row-reverse;
+    }
+
+    /*
+----------
+CORNER
+----------
+*/
+
+    .corner {
+        width: 25px;
+        height: 25px;
+        grid-area: 1/4;
+        align-self: end;
+        justify-self: end;
+        transition: 0.15s ease-out;
+    }
+
+    .corner:hover {
+        cursor: pointer;
+    }
+}
+
+.front:hover .corner {
+    width: 40px;
+    height: 40px;
 }

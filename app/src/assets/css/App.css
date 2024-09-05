@@ -15,6 +15,10 @@
   --font-mono: "Reddit Mono", monospace;
   --font-sans: "Reddit Sans", sans-serif;
   --font-condensed: "Reddit Sans Condensed", sans-serif;
+  -moz-user-select:none; /* firefox */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE */
+  user-select: none; /* Standard syntax */
 }
 
 body {
