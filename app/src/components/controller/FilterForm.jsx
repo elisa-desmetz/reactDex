@@ -5,65 +5,65 @@ import { useEffect, useState } from 'react';
 
 
 // Créer la section de la page correspondant aux critères de recherche
-export default function FilterForm({ tables, reset, onChange }) {
+export default function FilterForm({ tables, reset, updater }) {
     return (
         <form id="filterForm">
         <div id="miscFilter">
             <MiscFilters
-                onChange={{
-                    text: onChange.text,
-                    generation: onChange.generation
+                updater={{
+                    text: updater.text,
+                    generation: updater.generation
                 }} />
             <button id="btnReset" type="reset" onClick={reset}>Reset</button>
             </div>
             <TypeFilter
                 tbTypes={tables.type}
-                onChange={onChange.type} />
+                updater={updater.type} />
             <AreaFilter
                 tbArea={tables.area}
-                onChange={onChange.area} />
+                updater={updater.area} />
         </form>
     )
 }
 
 // Créer la section des critères divers : recherche textuelle, génération, région, bouton reset du formulaire
-function MiscFilters({ onChange }) {
+function MiscFilters({ updater }) {
     return (
             <div id="quicksearch">
                 <div className="desc">Nom&nbsp;</div>
-                <SearchField onChange={onChange.text} />
+                <SearchField updater={updater.text} />
             </div>
     )
 }
 
-function SearchField({ onChange }) {
+function SearchField({ updater }) {
     return (
         <>
             <input id="textfield" type="search" placeholder="Rechercher"
                 onChange={(e) => {
-                    onChange(e.target.value)
+                    updater(e.target.value)
                 }} />
         </>
     )
 }
 
-function TypeFilter({ tbTypes, onChange }) {
+function TypeFilter({ tbTypes, updater }) {
     return (
         <div id="typesFilter">
             <Collapsible title={'Types'} />
             <div id="typeButtonList">
                 {tbTypes.map((type) => (
-                    <TypeButton key={slugify(type.name)} onChange={onChange} type={type} />
+                    <TypeButton key={slugify(type.name)} updater={updater} type={type} />
                 ))}
             </div>
         </div>
     )
 }
 
-function TypeButton({ type, onChange }) {
+function TypeButton({ type, updater }) {
     return (
         <label className="lbType">
-            <input type="checkbox" onChange={(e) => onChange(e.target.checked, type.id_type)} />
+            <input type="checkbox" onClick={(e) => updater(e.target.checked, type.id_type)} />
             <div className="btnType" style={{ backgroundColor: 'var(--color-' + slugify(type.name) + ')' }}>
                 <img src={type.icon_mini} />
                 <div>{type.name}</div>
@@ -72,23 +72,23 @@ function TypeButton({ type, onChange }) {
     )
 }
 
-function AreaFilter({ tbArea, onChange }) {
+function AreaFilter({ tbArea, updater }) {
     return (
         <div id="areasFilter">
             <Collapsible title={'Zone de Capture'} />
             <div id="areaButtonList">
                 {tbArea.filter((area) => area.id > 0).map((area) => (
-                    <AreaButton key={area.id} area={area} onChange={onChange} />
+                    <AreaButton key={area.id} area={area} updater={updater} />
                 ))}
             </div>
         </div>
     )
 }
 
-function AreaButton({ area, onChange }) {
+function AreaButton({ area, updater }) {
     return (
         <label className="lbArea">
-            <input type="checkbox" onChange={(e) => onChange(e.target.checked, area.id)} />
+            <input type="checkbox" onClick={(e) => updater(e.target.checked, area.id)} />
             <div className="btnArea">{area.name}</div>
         </label>
     )

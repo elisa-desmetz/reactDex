@@ -40,6 +40,7 @@ function Page() {
    * @param {number} typeFilter 
    */
   function updateTypeFilter(checked, typeFilter) {
+    console.debug(checked)
     if (checked)
       setTypeFilters((prev) => new Set(prev).add(typeFilter));
     if (!checked)
@@ -136,7 +137,7 @@ function Page() {
           area: tbAreas
         }}
         reset={resetForm}
-        onChange={{
+        updater={{
           type: updateTypeFilter,
           area: updateAreaFilter,
           text: updateTextSearch,
