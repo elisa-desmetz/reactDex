@@ -16,7 +16,10 @@ export default function PokedexList({ tables }) {
                         animate={{ transform: "scale(1)" }}
                         exit={{ transform: "scale(0)" }}
                     >
-                        <Card key={slugify(pokemon.name_fr)} pokemon={pokemon} tables={{type:tables.type, area:tables.area}} />
+                        <Card
+                            key={slugify(pokemon.name_fr)}
+                            pokemon={pokemon}
+                            tables={{ type: tables.type, area: tables.area }} />
                     </motion.div>
                 ))}
             </AnimatePresence>
