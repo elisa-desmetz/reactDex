@@ -21,31 +21,36 @@ export default function GalleryController({ activeImageSet, updater }) {
 
 
     return (
-        <div className="galleryControl">
+        <>
+        {activeImageSet.length != 1 ?
 
-            {activeImageSet.length != 1 ?
-                <AnimatePresence>
-                    <motion.button
-                        key="left"
-                        initial={{ opacity: 0.5 }}
-                        whileHover={{ x: "-20%", opacity: 1 }}
-                        className="navigGallery left" onClick={(e) => {
-                            e.stopPropagation()
-                            updater(activeImageSet.activeIndex - 1)
-                        }} />
-                    <div>{nameDescription} - {activeImageSet.activeIndex + 1}/{activeImageSet.length}</div>
-                    <motion.button
-                        key="right"
-                        initial={{ opacity: 0.5 }}
-                        whileHover={{ x: "20%", opacity: 1 }}
-                        className="navigGallery right" onClick={(e) => {
-                            e.stopPropagation()
-                            updater(activeImageSet.activeIndex + 1)
-                        }} />
-                </AnimatePresence>
+                <div className="galleryControl" style={{justifyContent:"space-between"}}>
+                    <AnimatePresence>
+                        <motion.button
+                            key="left"
+                            initial={{ opacity: 0.5 }}
+                            whileHover={{ x: "-20%", opacity: 1 }}
+                            className="navigGallery left" onClick={(e) => {
+                                e.stopPropagation()
+                                updater(activeImageSet.activeIndex - 1)
+                            }} />
+                        <div>{nameDescription} - {activeImageSet.activeIndex + 1}/{activeImageSet.length}</div>
+                        <motion.button
+                            key="right"
+                            initial={{ opacity: 0.5 }}
+                            whileHover={{ x: "20%", opacity: 1 }}
+                            className="navigGallery right" onClick={(e) => {
+                                e.stopPropagation()
+                                updater(activeImageSet.activeIndex + 1)
+                            }} />
+                    </AnimatePresence>
+
+                </div>
                 :
-                <div>{nameDescription}</div>
-            }
-        </div>
+                <div className="galleryControl" style={{justifyContent:"center"}}>
+                    <div>{nameDescription}</div>
+                </div>
+        }
+        </>
     )
 }
