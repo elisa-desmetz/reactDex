@@ -2,7 +2,7 @@ import Identity from "../Identity";
 import Gallery from "./Gallery";
 import Type from "./images/Type";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 import createCornerGradient from "../../../utils/createCornerGradient";
@@ -17,66 +17,75 @@ export default function Card({ pokemon, tables }) {
     }
 
     return (
-        <motion.div
-            transition={{ duration: 0.7 }}
-            animate={{ rotateY: flip ? 0 : 180 }}
-        >
+
+        <AnimatePresence>
             <motion.div
                 transition={{ duration: 0.7 }}
                 animate={{ rotateY: flip ? 0 : 180 }}
-                className="card"
-                onClick={() => setFlip((prevState) => !prevState)}>
-
+            >
                 <motion.div
-                    className="front"
                     transition={{ duration: 0.7 }}
                     animate={{ rotateY: flip ? 0 : 180 }}
-                    whileTap={{ scale: 1.2 }}
-                    exit={{ opacity: 0 }}>
+                    className="card"
+                    onClick={(e) => {
+                        e.stopPropagation
+                        setFlip((prevState) => !prevState)
+                    }}>
 
-                    <Front pokemon={pokemon} types={tables.type} />
+                    <motion.div
+                        key="front"
+                        className="front"
+                        transition={{ duration: 0.7 }}
+                        animate={{ rotateY: flip ? 0 : 180 }}
+                        whileTap={{ scale: 1.1 }}
+                        exit={{ opacity: 0 }}>
 
-                </motion.div>
+                        <Front pokemon={pokemon} types={tables.type} />
 
-                <motion.div
-                    className="back"
-                    style={!pokemon.reg_discovered_by ?                        
-                        {
-                        backgroundImage: 
-                        `linear-gradient(
+                    </motion.div>
+
+                    <motion.div
+                        key="back"
+                        className="back"
+                        style={!pokemon.reg_discovered_by ?
+                            {
+                                backgroundImage:
+                                    `linear-gradient(
                             rgba(var(--bkg-card), 0.8),
                             transparent 50%),
                         url("${neverEncountered.areaImg}")`
-                    }:{
-                        backgroundImage: 
-                        `linear-gradient(
+                            } : {
+                                backgroundImage:
+                                    `linear-gradient(
                             rgba(var(--bkg-card), 0.8) 15%,
                             transparent 50%),
-                        url("${tables.area.at(pokemon.area_id).img}")`}
-                }
-                    initial={{ rotateY: 180 }}
-                    transition={{ duration: 0.7 }}
-                    animate={{ rotateY: flip ? 180 : 0 }}
-                    whileTap={{ scale: 1.2 }}
-                    exit={{ opacity: 1 }}>
+                        url("${tables.area.at(pokemon.area_id).img}")`
+                            }
+                        }
+                        initial={{ rotateY: 180 }}
+                        transition={{ duration: 0.7 }}
+                        animate={{ rotateY: flip ? 180 : 0 }}
+                        whileTap={{ scale: 1.2 }}
+                        exit={{ opacity: 1 }}>
 
-                    {!pokemon.reg_discovered_by ?
-                        <Back data={{
-                            discoveredBy: neverEncountered.discoveredBy,
-                            areaName: neverEncountered.areaName,
-                            areaImg: neverEncountered.areaImg,
-                            description: neverEncountered.description,
-                        }} /> :
-                        <Back data={{
-                            discoveredBy: pokemon.reg_discovered_by,
-                            areaName: tables.area.at(pokemon.area_id).name,
-                            areaImg: tables.area.at(pokemon.area_id).img,
-                            description: pokemon.desc,
-                        }} />
-                    }
+                        {!pokemon.reg_discovered_by ?
+                            <Back data={{
+                                discoveredBy: neverEncountered.discoveredBy,
+                                areaName: neverEncountered.areaName,
+                                areaImg: neverEncountered.areaImg,
+                                description: neverEncountered.description,
+                            }} /> :
+                            <Back data={{
+                                discoveredBy: pokemon.reg_discovered_by,
+                                areaName: tables.area.at(pokemon.area_id).name,
+                                areaImg: tables.area.at(pokemon.area_id).img,
+                                description: pokemon.desc,
+                            }} />
+                        }
+                    </motion.div>
                 </motion.div>
             </motion.div>
-        </motion.div>
+        </AnimatePresence>
     )
 }
 
@@ -94,9 +103,9 @@ function Front({ pokemon, types }) {
                 ))}
             </div>
             {/* .at(0) pour tester sur la premiere image sans avoir à implémenter le controller */}
-            <Gallery imgList={gallery.at(0)} />
+            <Gallery imgList={gallery} pokename={pokemon.name_fr} />
             <div className="bottom">
-                <div className="corner" style={{background:cornerGradient}}>
+                <div className="corner" style={{ background: cornerGradient }}>
 
                 </div>
             </div>

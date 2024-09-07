@@ -19,7 +19,6 @@ CARD
     position: absolute;
     top: 0;
     left: 0;
-    transform: rotate(180);
 
     height: 100%;
     width: 100%;
@@ -129,6 +128,11 @@ CARD
 
     .galleryControl {
         grid-area: 4 / 1 / 5 / 3;
+        margin: 0px 10px;
+        gap:10px;
+        display:flex;
+        align-items: center;
+        justify-content: space-evenly;
     }
 
     .bottom {
@@ -162,4 +166,29 @@ CORNER
 .front:hover .corner {
     width: 40px;
     height: 40px;
+}
+
+.navigGallery{
+    background-color: ghostwhite;
+    width:150px;
+    height:150px;
+    border: none;
+    width: 0;
+    height: 0;
+    border-radius:50%;
+    border-top:
+      15px solid transparent;
+    border-bottom:
+      15px solid transparent; 
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.navigGallery.right{
+    border-left:
+    20px solid rgba(100, 100, 100, 1);
+}
+
+.navigGallery.left{
+    border-right:
+    20px solid rgba(100, 100, 100, 1);
 }
