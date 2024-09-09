@@ -141,22 +141,31 @@ CARD
         margin-top: 5px;
         display:grid;
 
-        .shinyToggle{
+        .labelShinyToggle{
+            display: flex;
             justify-self: start;
             align-self: center;
 
-            margin-bottom:10px;
-            margin-left: 10px;
-
             width:40px;
             height:40px;
+            margin-bottom:10px;
+            margin-left: 10px;
+        }
 
-            border:none;
+        .btnShinyToggle{
+            cursor: pointer;
             -webkit-appearance: none;
             appearance: none;
+          
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
 
             padding:5px;
             border-radius: 50%; 
+            width: 30px;
+            height:30px;
 
             box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7);
 

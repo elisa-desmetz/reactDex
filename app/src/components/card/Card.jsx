@@ -49,7 +49,6 @@ export default function Card({ pokemon, tables }) {
                         className="front"
                         transition={{ duration: 0.7 }}
                         animate={{ rotateY: flip ? 0 : 180 }}
-                        whileTap={{ scale: 1.1 }}
                         exit={{ opacity: 0 }}>
 
                         <Front pokemon={pokemon} isShiny={isShiny} types={tables.type} updater={toggleShiny} />
@@ -77,7 +76,6 @@ export default function Card({ pokemon, tables }) {
                         initial={{ rotateY: 180 }}
                         transition={{ duration: 0.7 }}
                         animate={{ rotateY: flip ? 180 : 0 }}
-                        whileTap={{ scale: 1.2 }}
                         exit={{ opacity: 1 }}>
 
                         {!pokemon.reg_discovered_by ?

@@ -1,7 +1,7 @@
 import Minisprite from "./images/Minisprite"
 import Sprite from "./images/Sprite"
 
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 import GalleryController from "./GalleryController"
 
@@ -67,11 +67,10 @@ export default function Gallery({ imgList, updater, gradient }) {
                 updater={updateGallery} />
             <div className="bottom">
                 {(gallery[activeIndex].img.minisprite.shiny && gallery[activeIndex].img.sprite.shiny) &&
-                    <button className="shinyToggle"
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            updater()
-                        }} />
+                    <ShinyToggle
+                        className="shinyToggle"
+                        updater={updater}
+                        isShiny={imgList.isShiny} />
                 }
                 <div className="corner" style={{ background: gradient }} />
             </div>
@@ -79,11 +78,25 @@ export default function Gallery({ imgList, updater, gradient }) {
     )
 }
 
-function shinyToggle(){
+function ShinyToggle({ updater, isShiny }) {
     return (
-        <label name="toggleShiny">
-            <input className="hiddenInput" />
-            <div className="shinyToggle"/>
+        <label className="labelShinyToggle" name="toggleShiny">
+            <input
+                onClick={(e) => {
+                    updater()
+                }}
+                type="checkbox"
+                className="hiddenInput" />
+            <AnimatePresence>
+                <motion.div
+                    animate={{ 
+                        filter: isShiny ?  "saturate(100%)" : "saturate(10%)",
+                        boxShadow : isShiny ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(255, 51, 96,0.6)" : "" 
+                    }}
+                    className="btnShinyToggle"
+                    transition={{duration:0.1}} 
+                    whileHover={{boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px #CDCDCD"}}/>
+            </AnimatePresence>
         </label>
     )
 }
