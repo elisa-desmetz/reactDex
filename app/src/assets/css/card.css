@@ -128,7 +128,7 @@ CARD
 
     .galleryControl {
         grid-area: 4 / 1 / 5 / 3;
-        margin: 0px 10px;
+        margin: 0px 30px;
         gap:10px;
         display:flex;
         align-items: center;
@@ -136,10 +136,38 @@ CARD
 
     .bottom {
         grid-area: 5 / 1 / 5 / 4;
+        gap:10px;
         margin: -5px;
         margin-top: 5px;
-        display:flex;
-        flex-direction: row-reverse;
+        display:grid;
+
+        .shinyToggle{
+            justify-self: start;
+            align-self: center;
+
+            margin-bottom:10px;
+            margin-left: 10px;
+
+            width:40px;
+            height:40px;
+
+            border:none;
+            -webkit-appearance: none;
+            appearance: none;
+
+            padding:5px;
+            border-radius: 50%; 
+
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7);
+
+            filter: saturate(10%);
+
+            background: center / contain url("https://www.pokepedia.fr/images/2/28/Miniature_Chromatique_EB.png"), rgba(255, 255, 255, 0.4);
+            background-clip:padding-box;
+            background-repeat: no-repeat;
+            background-size: 30px;
+
+          }
     }
 
     /*

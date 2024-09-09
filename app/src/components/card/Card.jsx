@@ -8,13 +8,25 @@ import { useState } from "react";
 import createCornerGradient from "../../../utils/createCornerGradient";
 
 export default function Card({ pokemon, tables }) {
-    const [flip, setFlip] = useState(true);
+
+    const initialState = {flip:true, isShiny:false};
+    
+    const [isShiny, setShiny] = useState(initialState.isShiny);
+
+    const [flip, setFlip] = useState(initialState.flip);
+
     const neverEncountered = {
         discoveredBy: "-",
         areaName: tables.area.at(0).name,
         areaImg: tables.area.at(0).img,
         description: "Cette espèce n'a pas encore été rencontrée."
     }
+
+    function toggleShiny(){
+        setShiny((prev) => !prev)
+        console.debug(isShiny)
+    }
+
 
     return (
 
@@ -40,7 +52,7 @@ export default function Card({ pokemon, tables }) {
                         whileTap={{ scale: 1.1 }}
                         exit={{ opacity: 0 }}>
 
-                        <Front pokemon={pokemon} types={tables.type} />
+                        <Front pokemon={pokemon} isShiny={isShiny} types={tables.type} updater={toggleShiny} />
 
                     </motion.div>
 
@@ -89,7 +101,7 @@ export default function Card({ pokemon, tables }) {
     )
 }
 
-function Front({ pokemon, types }) {
+function Front({ pokemon, isShiny, types, updater }) {
     const typeList = Object.entries(pokemon.reg_type);
     const gallery = Object.entries(pokemon.reg_galerie);
     const cornerGradient = createCornerGradient(types, Object.values(pokemon.reg_type))
@@ -103,12 +115,7 @@ function Front({ pokemon, types }) {
                 ))}
             </div>
             {/* .at(0) pour tester sur la premiere image sans avoir à implémenter le controller */}
-            <Gallery imgList={gallery} pokename={pokemon.name_fr} />
-            <div className="bottom">
-                <div className="corner" style={{ background: cornerGradient }}>
-
-                </div>
-            </div>
+            <Gallery imgList={{gallery:gallery, isShiny:isShiny}} updater={updater} gradient={cornerGradient}/>
         </>
     )
 }

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function GalleryController({ activeImageSet, updater }) {
+    
 
     let nameDescription = ""
     switch (activeImageSet.imageSet.name) {
@@ -22,7 +23,7 @@ export default function GalleryController({ activeImageSet, updater }) {
 
     return (
         <>
-        {activeImageSet.length != 1 ?
+        {activeImageSet.length != 1 &&
 
                 <div className="galleryControl" style={{justifyContent:"space-between"}}>
                     <AnimatePresence>
@@ -44,11 +45,6 @@ export default function GalleryController({ activeImageSet, updater }) {
                                 updater(activeImageSet.activeIndex + 1)
                             }} />
                     </AnimatePresence>
-
-                </div>
-                :
-                <div className="galleryControl" style={{justifyContent:"center"}}>
-                    <div>{nameDescription}</div>
                 </div>
         }
         </>
