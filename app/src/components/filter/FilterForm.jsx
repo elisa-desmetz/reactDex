@@ -154,7 +154,7 @@ function TypeButton({ type, updater }) {
                 className="btn filter type"
                 style={{ backgroundColor: 'var(--color-' + slugify(type.name) + ')' }}
             >
-                <img src={type.icon_mini} />
+                <img src={"images/type/"+type.id_type+"-mini.webp"} />
                 <div>
                     {type.name}
                 </div>

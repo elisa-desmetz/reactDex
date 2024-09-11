@@ -74,8 +74,6 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
         }
     }
 
-    const yourImage = '/images/pokemon/'+imgPath.regular+'-'+activeRegularIndex+'-s.webp';
-
     return (
         <>
             {!status.mega && !status.giga &&
@@ -86,7 +84,7 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
                                 img={galleryRegular[activeRegularIndex].img.minisprite.shiny}
                             />
                             <Sprite
-                                img={'/images/pokemon/'+imgPath.regular+'-'+activeRegularIndex+'-s.webp'}
+                                img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '-s.webp'}
                             />
                         </>
                         :
@@ -95,7 +93,7 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
                                 img={galleryRegular[activeRegularIndex].img.minisprite.regular}
                             />
                             <Sprite
-                                img={'/images/pokemon/'+imgPath.regular+'-'+activeRegularIndex+'.webp'}
+                                img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '.webp'}
                             />
                         </>
                     }
