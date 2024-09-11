@@ -81,7 +81,7 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
                     {status.shiny ?
                         <>
                             <Minisprite
-                                img={galleryRegular[activeRegularIndex].img.minisprite.shiny}
+                                img={'/images/pokemon/minisprite/' + imgPath.regular + '-' + activeRegularIndex + '-s.webp'}
                             />
                             <Sprite
                                 img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '-s.webp'}
@@ -90,7 +90,7 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
                         :
                         <>
                             <Minisprite
-                                img={galleryRegular[activeRegularIndex].img.minisprite.regular}
+                                img={'/images/pokemon/minisprite/' + imgPath.regular + '-' + activeRegularIndex + '.webp'}
                             />
                             <Sprite
                                 img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '.webp'}
