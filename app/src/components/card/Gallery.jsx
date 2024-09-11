@@ -7,10 +7,11 @@ import GalleryController from "./GalleryController"
 
 import { useState } from "react"
 
-export default function Gallery({ imgList, status, updater, gradient, mega }) {
+export default function Gallery({ imgList, status, updater, gradient, mega, giga }) {
 
     const galleryRegular = new Array()
     const galleryMega = new Array()
+    let galleryGiga = new Array()
     const regList = (Object.values(imgList.regular))
 
     regList.forEach(element => {
@@ -46,6 +47,16 @@ export default function Gallery({ imgList, status, updater, gradient, mega }) {
         galleryMega.push(unit)
     }
 
+    if (imgList.giga) {
+        galleryGiga.push({
+            name: "Giga",
+            img: {
+                minisprite: (imgList.giga)[1][1],
+                sprite: (imgList.giga)[0][1],
+            }
+        })
+    }
+
     const initialState = { index: 0 };
 
     const [activeRegularIndex, setActiveRegularIndex] = useState(initialState.index);
@@ -65,7 +76,7 @@ export default function Gallery({ imgList, status, updater, gradient, mega }) {
 
     return (
         <>
-            {!status.mega ?
+            {!status.mega && !status.giga &&
                 <>
                     {status.shiny ?
                         <>
@@ -87,7 +98,8 @@ export default function Gallery({ imgList, status, updater, gradient, mega }) {
                         </>
                     }
                 </>
-                :
+            }
+            {status.mega &&
                 <>
                     {mega.active == 'x' ?
                         <>
@@ -136,7 +148,30 @@ export default function Gallery({ imgList, status, updater, gradient, mega }) {
                     }
                 </>
             }
-            {!status.mega ?
+            {status.giga &&
+                <>
+                    {status.shiny ?
+                        <>
+                            <Minisprite
+                                img={galleryGiga.at(0).img.minisprite.shiny}
+                            />
+                            <Sprite
+                                img={galleryGiga.at(0).img.sprite.shiny}
+                            />
+                        </>
+                        :
+                        <>
+                            <Minisprite
+                                img={galleryGiga.at(0).img.minisprite.regular}
+                            />
+                            <Sprite
+                                img={galleryGiga.at(0).img.sprite.regular}
+                            />
+                        </>
+                    }
+                </>
+            }
+            {(!status.mega && !status.giga) &&
                 <GalleryController
                     status={{ mega: status.mega }}
                     activeImageSet={{
@@ -146,7 +181,8 @@ export default function Gallery({ imgList, status, updater, gradient, mega }) {
                     }}
                     updater={updateRegularGallery}
                 />
-                :
+            }
+            {status.mega &&
                 <>
                     {mega.active == 'x' ?
                         <GalleryController
@@ -183,8 +219,20 @@ export default function Gallery({ imgList, status, updater, gradient, mega }) {
                 }
                 {mega.exists &&
                     <MegaToggle
-                        updater={updater.toggleMega}
-                        isMega={status.mega}
+                        updater={{
+                            mega: updater.toggleMega,
+                            giga: updater.toggleGiga
+                        }}
+                        status={status}
+                    />
+                }
+                {giga.exists &&
+                    <GigaToggle
+                        updater={{
+                            mega: updater.toggleMega,
+                            giga: updater.toggleGiga
+                        }}
+                        status={status}
                     />
                 }
                 <div className="corner" style={{ background: gradient }} />
@@ -217,12 +265,15 @@ function ShinyToggle({ updater, isShiny }) {
     )
 }
 
-function MegaToggle({ updater, isMega }) {
+function MegaToggle({ updater, status }) {
     return (
         <label className="labelToggle" name="toggleMega">
             <input
                 onClick={(e) => {
-                    updater()
+                    updater.mega()
+                    if (status.giga) {
+                        updater.giga()
+                    }
                 }}
                 type="checkbox"
                 className="hiddenInput" />
@@ -231,8 +282,36 @@ function MegaToggle({ updater, isMega }) {
                     className="btnToggle mega"
                     initial={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7)" }}
                     animate={{
-                        filter: isMega ? "saturate(100%)" : "saturate(10%)",
-                        boxShadow: isMega ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(2,169,167,0.8)" : "",
+                        filter: status.mega ? "saturate(100%)" : "saturate(10%)",
+                        boxShadow: status.mega ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(2,169,167,0.8)" : "",
+                    }}
+                    transition={{ duration: 0.1 }}
+                    whileHover={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px #CDCDCD" }} />
+            </AnimatePresence>
+        </label>
+    )
+}
+
+function GigaToggle({ updater, status }) {
+    return (
+        <label className="labelToggle" name="toggleGiga">
+            <input
+                onClick={(e) => {
+                    updater.giga()
+                    if (status.mega) {
+                        console.debug("click giga")
+                        updater.mega()
+                    }
+                }}
+                type="checkbox"
+                className="hiddenInput" />
+            <AnimatePresence>
+                <motion.div
+                    className="btnToggle giga"
+                    initial={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7)" }}
+                    animate={{
+                        filter: status.giga ? "saturate(100%)" : "saturate(10%)",
+                        boxShadow: status.giga ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(231,0,64,0.8)" : "",
                     }}
                     transition={{ duration: 0.1 }}
                     whileHover={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px #CDCDCD" }} />

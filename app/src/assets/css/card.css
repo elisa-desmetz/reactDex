@@ -186,6 +186,13 @@ CARD
             background-repeat: no-repeat;
             background-size: 30px;
         }
+
+        .btnToggle.giga {
+            background: center / contain url("/images/giga.webp"), rgba(255, 255, 255, 0.4);
+            background-clip: padding-box;
+            background-repeat: no-repeat;
+            background-size: 30px;
+        }
     }
 
     /*
