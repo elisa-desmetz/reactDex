@@ -33,6 +33,7 @@ export default function Card({ pokemon, tables }) {
     }
 
 
+
     return (
 
         <AnimatePresence>

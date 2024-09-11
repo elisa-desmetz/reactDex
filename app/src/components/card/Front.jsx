@@ -7,6 +7,8 @@ import { useState } from "react";
 import createCornerGradient from "../../../utils/createCornerGradient";
 
 export default function Front({ pokemon, status, types, updater }) {
+    
+    const imgPath = pokemon.pokedex_id+"-"+pokemon.variant+"-"+pokemon.forme
 
     const regularTypeList = Object.entries(pokemon.reg_type);
     const regularGallery = Object.entries(pokemon.reg_galerie);
@@ -117,6 +119,9 @@ export default function Front({ pokemon, status, types, updater }) {
             </div>
 
             <Gallery
+                imgPath={{
+                    regular:imgPath
+                }}
                 imgList={{
                     regular: regularGallery,
                     megaX: megaXGallery,

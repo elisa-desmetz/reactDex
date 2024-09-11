@@ -7,7 +7,7 @@ import GalleryController from "./GalleryController"
 
 import { useState } from "react"
 
-export default function Gallery({ imgList, status, updater, gradient, mega, giga }) {
+export default function Gallery({ imgPath, imgList, status, updater, gradient, mega, giga }) {
 
     const galleryRegular = new Array()
     const galleryMega = new Array()
@@ -74,6 +74,8 @@ export default function Gallery({ imgList, status, updater, gradient, mega, giga
         }
     }
 
+    const yourImage = '/images/pokemon/'+imgPath.regular+'-'+activeRegularIndex+'-s.webp';
+
     return (
         <>
             {!status.mega && !status.giga &&
@@ -84,7 +86,7 @@ export default function Gallery({ imgList, status, updater, gradient, mega, giga
                                 img={galleryRegular[activeRegularIndex].img.minisprite.shiny}
                             />
                             <Sprite
-                                img={galleryRegular[activeRegularIndex].img.sprite.shiny}
+                                img={'/images/pokemon/'+imgPath.regular+'-'+activeRegularIndex+'-s.webp'}
                             />
                         </>
                         :
@@ -93,7 +95,7 @@ export default function Gallery({ imgList, status, updater, gradient, mega, giga
                                 img={galleryRegular[activeRegularIndex].img.minisprite.regular}
                             />
                             <Sprite
-                                img={galleryRegular[activeRegularIndex].img.sprite.regular}
+                                img={'/images/pokemon/'+imgPath.regular+'-'+activeRegularIndex+'.webp'}
                             />
                         </>
                     }
@@ -311,7 +313,7 @@ function GigaToggle({ updater, status }) {
                     initial={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7)" }}
                     animate={{
                         filter: status.giga ? "saturate(100%)" : "saturate(10%)",
-                        boxShadow: status.giga ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(231,0,64,0.8)" : "",
+                        boxShadow: status.giga ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(231,0,64,0.8)" : "0 0 0 2px rgba(255, 255, 255, 0.7)",
                     }}
                     transition={{ duration: 0.1 }}
                     whileHover={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px #CDCDCD" }} />
