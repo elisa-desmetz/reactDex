@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"
 
-export default function GalleryController({ activeImageSet, updater }) {
+export default function GalleryController({ status, activeImageSet, updater }) {
     
 
     let nameDescription = ""
@@ -33,7 +33,8 @@ export default function GalleryController({ activeImageSet, updater }) {
                             whileHover={{ x: "-20%", opacity: 1 }}
                             className="navigGallery left" onClick={(e) => {
                                 e.stopPropagation()
-                                updater(activeImageSet.activeIndex - 1)
+                                {updater(activeImageSet.activeIndex - 1)}
+                                
                             }} />
                         <div>{nameDescription} - {activeImageSet.activeIndex + 1}/{activeImageSet.length}</div>
                         <motion.button

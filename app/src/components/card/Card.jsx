@@ -9,9 +9,10 @@ import createCornerGradient from "../../../utils/createCornerGradient";
 
 export default function Card({ pokemon, tables }) {
 
-    const initialState = {flip:true, isShiny:false};
-    
+    const initialState = { flip: true, isShiny: false, isMega: false };
+
     const [isShiny, setShiny] = useState(initialState.isShiny);
+    const [isMega, setMega] = useState(initialState.isMega)
 
     const [flip, setFlip] = useState(initialState.flip);
 
@@ -22,9 +23,12 @@ export default function Card({ pokemon, tables }) {
         description: "Cette espèce n'a pas encore été rencontrée."
     }
 
-    function toggleShiny(){
+    function toggleShiny() {
         setShiny((prev) => !prev)
-        console.debug(isShiny)
+    }
+
+    function toggleMega() {
+        setMega((prev) => !prev)
     }
 
 
@@ -51,7 +55,11 @@ export default function Card({ pokemon, tables }) {
                         animate={{ rotateY: flip ? 0 : 180 }}
                         exit={{ opacity: 0 }}>
 
-                        <Front pokemon={pokemon} isShiny={isShiny} types={tables.type} updater={toggleShiny} />
+                        <Front
+                            pokemon={pokemon}
+                            status={{ shiny: isShiny, mega: isMega }}
+                            types={tables.type}
+                            updater={{ shiny: toggleShiny, mega: toggleMega }} />
 
                     </motion.div>
 
@@ -99,21 +107,97 @@ export default function Card({ pokemon, tables }) {
     )
 }
 
-function Front({ pokemon, isShiny, types, updater }) {
-    const typeList = Object.entries(pokemon.reg_type);
-    const gallery = Object.entries(pokemon.reg_galerie);
-    const cornerGradient = createCornerGradient(types, Object.values(pokemon.reg_type))
+function Front({ pokemon, status, types, updater }) {
+
+    const regularTypeList = Object.entries(pokemon.reg_type);
+    const regularGallery = Object.entries(pokemon.reg_galerie);
+
+    const megaExists = pokemon.megax_type && pokemon.megax_galerie
+
+
+    let megaXTypeList
+    let megaYTypeList
+    if (pokemon.megax_type) {
+        megaXTypeList = Object.entries(pokemon.megax_type)
+    }
+    if (pokemon.megay_type) {
+        megaYTypeList = Object.entries(pokemon.megay_type)
+    }
+
+    let megaXGallery
+    let megaYGallery
+    if (pokemon.megax_galerie) {
+        megaXGallery = Object.entries(pokemon.megax_galerie)
+    }
+    if (pokemon.megay_galerie) {
+        megaYGallery = Object.entries(pokemon.megay_galerie)
+    }
+
+    const initialState = { mega: 'x' }
+
+    const [activeMega, setActiveMega] = useState(initialState.mega)
+
+    function updateMega() {
+        setActiveMega((prev) => {
+            if (prev == initialState.mega) {
+                return 'y'
+            }
+            else {
+                return initialState.mega
+            }
+        })
+    }
+
+    
+    let cornerGradient 
+    if (!status.mega){
+        cornerGradient = createCornerGradient(types, Object.values(pokemon.reg_type))
+    }
+    else {
+        if (activeMega == 'x') {
+            cornerGradient = createCornerGradient(types, Object.values(pokemon.megax_type))
+        }
+        else {
+            cornerGradient = createCornerGradient(types, Object.values(pokemon.megay_type))
+        }
+    }
 
     return (
         <>
             <Identity name={{ fr: pokemon.name_fr, en: pokemon.name_en }} num={pokemon.pokedex_id} />
             <div className="types">
-                {typeList.map((type) => (
-                    <Type key={type[0]} type={type[1]} tbTypes={types} />
-                ))}
+                {!(status.mega) ?
+                    <>
+                        {regularTypeList.map((type) => (
+                            <Type key={type[0]} type={type[1]} tbTypes={types} />
+                        ))}
+                    </> :
+                    <>
+                        {(activeMega == 'x') ?
+                            <>
+                                {megaXTypeList.map((type) => (
+                                    <Type key={type[0]} type={type[1]} tbTypes={types} />
+                                ))}
+                            </>
+                            :
+                            <>
+                                {megaYTypeList.map((type) => (
+                                    <Type key={type[0]} type={type[1]} tbTypes={types} />
+                                ))}
+                            </>}
+                    </>}
+
             </div>
-            {/* .at(0) pour tester sur la premiere image sans avoir à implémenter le controller */}
-            <Gallery imgList={{gallery:gallery, isShiny:isShiny}} updater={updater} gradient={cornerGradient}/>
+            <Gallery
+                imgList={{ regular: regularGallery, megaX:megaXGallery, megaY:megaYGallery }}
+                status={status}
+                mega={{exists:megaExists, active:activeMega}}
+                updater={{
+                    toggleShiny: updater.shiny,
+                    toggleMega: updater.mega,
+                    updateMega: updateMega
+                }}
+                gradient={cornerGradient} />
         </>
     )
 }
