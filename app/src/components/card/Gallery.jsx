@@ -106,19 +106,19 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
                             {status.shiny ?
                                 <>
                                     <Minisprite
-                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-' + activeRegularIndex + '-mx-s.webp'}
+                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-mx-s.webp'}
                                     />
                                     <Sprite
-                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '-mx-s.webp'}
+                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-mx-s.webp'}
                                     />
                                 </>
                                 :
                                 <>
                                     <Minisprite
-                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-' + activeRegularIndex + '-mx.webp'}
+                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-mx.webp'}
                                     />
                                     <Sprite
-                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '-mx.webp'}
+                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-mx.webp'}
                                     />
                                 </>
                             }
@@ -128,19 +128,19 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
                             {status.shiny ?
                                 <>
                                     <Minisprite
-                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-' + activeRegularIndex + '-my-s.webp'}
+                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-my-s.webp'}
                                     />
                                     <Sprite
-                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '-my-s.webp'}
+                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-my-s.webp'}
                                     />
                                 </>
                                 :
                                 <>
                                     <Minisprite
-                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-' + activeRegularIndex + '-my.webp'}
+                                        img={'/images/pokemon/minisprite/' + imgPath.regular + '-my.webp'}
                                     />
                                     <Sprite
-                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-' + activeRegularIndex + '-my.webp'}
+                                        img={'/images/pokemon/sprite/' + imgPath.regular + '-my.webp'}
                                     />
                                 </>
                             }
@@ -153,19 +153,19 @@ export default function Gallery({ imgPath, imgList, status, updater, gradient, m
                     {status.shiny ?
                         <>
                             <Minisprite
-                                img={galleryGiga.at(0).img.minisprite.shiny}
+                                img={'/images/pokemon/minisprite/' + imgPath.regular  + '-g-s.webp'}
                             />
                             <Sprite
-                                img={galleryGiga.at(0).img.sprite.shiny}
+                                img={'/images/pokemon/sprite/' + imgPath.regular + '-g-s.webp'}
                             />
                         </>
                         :
                         <>
                             <Minisprite
-                                img={galleryGiga.at(0).img.minisprite.regular}
+                                img={'/images/pokemon/minisprite/' + imgPath.regular + '-g.webp'}
                             />
                             <Sprite
-                                img={galleryGiga.at(0).img.sprite.regular}
+                                img={'/images/pokemon/sprite/' + imgPath.regular + '-g.webp'}
                             />
                         </>
                     }
