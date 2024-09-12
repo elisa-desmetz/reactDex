@@ -1,20 +1,21 @@
-import Identity from "../Identity";
+import Identity from "./Identity";
 import Gallery from "./Gallery";
-import Type from "./images/Type";
+import Types from "./Types";
 
 import { useState } from "react";
 
 import createCornerGradient from "../../../utils/createCornerGradient";
 
 export default function Front({ pokemon, status, types, updater }) {
-    
-    const imgPath = pokemon.pokedex_id+"-"+pokemon.variant+"-"+pokemon.forme
+
+    const imgPath = pokemon.pokedex_id + "-" + pokemon.variant + "-" + pokemon.forme
 
     const regularTypeList = Object.entries(pokemon.reg_type);
     const regularGallery = Object.entries(pokemon.reg_galerie);
 
-    const megaExists = pokemon.megax_type && pokemon.megax_galerie;
-    const gigaExists = pokemon.giga_type && pokemon.giga_galerie;
+    const megaXExists = pokemon.megax_type;
+    const megaYExists = pokemon.megay_type;
+    const gigaExists = pokemon.giga_type;
 
     // Mega types
     let megaXTypeList;
@@ -26,26 +27,10 @@ export default function Front({ pokemon, status, types, updater }) {
         megaYTypeList = Object.entries(pokemon.megay_type);
     }
 
-    // Mega images
-    let megaXGallery;
-    let megaYGallery;
-    if (pokemon.megax_galerie) {
-        megaXGallery = Object.entries(pokemon.megax_galerie);
-    }
-    if (pokemon.megay_galerie) {
-        megaYGallery = Object.entries(pokemon.megay_galerie);
-    }
-
     // Giga types
     let gigaTypeList
     if (pokemon.giga_type) {
         gigaTypeList = Object.entries(pokemon.giga_type)
-    }
-
-    // Giga images
-    let gigaGallery
-    if (pokemon.giga_galerie) {
-        gigaGallery = Object.entries(pokemon.giga_galerie);
     }
 
     // Active mega
@@ -85,53 +70,29 @@ export default function Front({ pokemon, status, types, updater }) {
                 name={{ fr: pokemon.name_fr, en: pokemon.name_en }}
                 num={pokemon.pokedex_id}
             />
-            <div className="types">
-                {(!(status.mega) && !(status.giga)) &&
-                    <>
-                        {regularTypeList.map((type) => (
-                            <Type key={type[0]} type={type[1]} tbTypes={types} />
-                        ))}
-                    </>
-                }
-                {status.mega &&
-                    <>
-                        {(activeMega == 'x') ?
-                            <>
-                                {megaXTypeList.map((type) => (
-                                    <Type key={type[0]} type={type[1]} tbTypes={types} />
-                                ))}
-                            </>
-                            :
-                            <>
-                                {megaYTypeList.map((type) => (
-                                    <Type key={type[0]} type={type[1]} tbTypes={types} />
-                                ))}
-                            </>}
-                    </>
-                }
-                {status.giga &&
-                    <>
-                        {gigaTypeList.map((type) => (
-                            <Type key={type[0]} type={type[1]} tbTypes={types} />
-                        ))}
-                    </>
-                }
-            </div>
+            <Types
+                key={pokemon.pokedex_id}
+                status={status}
+                typeList={{
+                    regular: regularTypeList,
+                    megaX: megaXTypeList,
+                    megaY: megaYTypeList,
+                    giga: gigaTypeList
+                }}
+                activeMega={activeMega} />
 
             <Gallery
                 imgPath={{
-                    regular:imgPath
+                    regular: imgPath,
+                    megaX: imgPath + '-mx',
+                    megaY: imgPath + '-my',
+                    giga: imgPath + '-g'
                 }}
-                imgList={{
-                    regular: regularGallery,
-                    megaX: megaXGallery,
-                    megaY: megaYGallery,
-                    giga: gigaGallery,
-                }}
+                regularGallery={regularGallery}
                 status={status}
                 mega={{
-                    exists: megaExists,
-                    active: activeMega
+                    exists: { x: megaXExists, y: megaYExists },
+                    current: activeMega
                 }}
                 giga={{ exists: gigaExists }}
                 updater={{

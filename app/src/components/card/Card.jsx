@@ -62,7 +62,7 @@ export default function Card({ pokemon, tables }) {
                             status={{
                                 shiny: isShiny,
                                 mega: isMega,
-                                giga:isGiga,
+                                giga: isGiga,
                             }}
                             types={tables.type}
                             updater={{
