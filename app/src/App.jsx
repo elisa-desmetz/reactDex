@@ -127,12 +127,18 @@ function Page() {
   // Filtrer le pokedex selon les critères de recherche
   const filteredPokedex = tbPokedex.filter((pokemon) => {
     // Récupération de la liste des types du pokemon pour contrôle
-    const pokemonTypes = new Set(Object.values(pokemon.reg_type));
+    let pokemonTypes = new Set(Object.values(pokemon.reg_type));
+    if (pokemon.megax_type) {
+      pokemonTypes = pokemonTypes.union(new Set(Object.values(pokemon.megax_type)));
+    }
+    if (pokemon.megay_type) {
+      pokemonTypes = pokemonTypes.union(new Set(Object.values(pokemon.megay_type)))
+    }
 
     return (
       // Filtre sur la zone de capture
       ((areaFilters.size === 0 ||
-        areaFilters.has(pokemon.area_id)&& pokemon.reg_discovered_by)) &&
+        areaFilters.has(pokemon.area_id) && pokemon.reg_discovered_by)) &&
 
       // Filtre sur le type
       (typeFilters.size === 0 ||

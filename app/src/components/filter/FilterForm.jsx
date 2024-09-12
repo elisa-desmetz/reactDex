@@ -193,11 +193,3 @@ function AreaButton({ area, updater }) {
         </label>
     )
 }
-
-/*
-function Collapsible({ title }) {
-    return (
-        <div className="collapsible active">{title}</div>
-    )
-}
-*/
