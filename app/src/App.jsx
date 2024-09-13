@@ -10,6 +10,7 @@ import supabase from '../utils/supabase'
 
 import FilterForm from './components/filter/FilterForm'
 import PokedexList from './components/PokedexList'
+import ScrollButtonUp from './components/ScrollButtonUp'
 
 function Page() {
   // Chargement des tables
@@ -207,6 +208,7 @@ function Page() {
         }}
       />
     </div>
+    <ScrollButtonUp/>
   </>
   )
 }
