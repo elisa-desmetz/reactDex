@@ -274,8 +274,6 @@ function loadType() {
         .from("type")
         .select(
           `name,
-          icon,
-          icon_mini,
           rgb,
           id_type`
         )
