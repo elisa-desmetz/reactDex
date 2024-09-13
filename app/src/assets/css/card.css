@@ -78,6 +78,7 @@ CARD
     background-color: #DEDEDE;
 
     .nameFr {
+        z-index:2;
         grid-area: 1 / 2 / 2 / 3;
         font-variant-caps: small-caps;
         align-self: end;
@@ -88,6 +89,7 @@ CARD
     }
 
     .nameEn {
+        z-index:2;
         grid-area: 2 / 2 / 3 / 3;
         font-variant-caps: small-caps;
         align-self: start;

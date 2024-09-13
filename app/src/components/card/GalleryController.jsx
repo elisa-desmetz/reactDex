@@ -33,7 +33,7 @@ export default function GalleryController({ status, activeImageSet, updater }) {
                             whileHover={{ x: "-10%", opacity: 1 }}
                             className="navigGallery left" onClick={(e) => {
                                 e.stopPropagation()
-                                {updater.gallery(activeImageSet.activeIndex - 1)}
+                                {updater(activeImageSet.activeIndex - 1)}
                                 
                             }} />
                         <div>{nameDescription} - {activeImageSet.activeIndex + 1}/{activeImageSet.length}</div>
@@ -43,7 +43,7 @@ export default function GalleryController({ status, activeImageSet, updater }) {
                             whileHover={{ x: "10%", opacity: 1 }}
                             className="navigGallery right" onClick={(e) => {
                                 e.stopPropagation()
-                                updater.gallery(activeImageSet.activeIndex + 1)
+                                updater(activeImageSet.activeIndex + 1)
                             }} />
                     </AnimatePresence>
                 </div>

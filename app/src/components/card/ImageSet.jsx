@@ -1,13 +1,13 @@
-import { useState } from "react"
+import React, { useState } from "react";
+import ImageWithFallbacks from "./ImageWithFallbacks";
 
 export default function ImageSet({ isShiny, imgPath, imgPathFallback, shinyExists }) {
 
     const minispritePath = '/images/pokemon/minisprite/'
     const spritePath = '/images/pokemon/sprite/'
-
-    let path
     const unknown = "unknown.webp"
 
+    let path
     if (isShiny) {
         path = imgPath + '-s.webp'
     }
@@ -22,7 +22,6 @@ export default function ImageSet({ isShiny, imgPath, imgPathFallback, shinyExist
     else {
         minispriteFallback = imgPathFallback + '.webp'
     }
-
     const fbMinispriteValues = [minispritePath + minispriteFallback, minispritePath + unknown]
 
     let spriteFallback
@@ -34,50 +33,14 @@ export default function ImageSet({ isShiny, imgPath, imgPathFallback, shinyExist
     }
     const fbSpriteValues = [spritePath + spriteFallback, spritePath + unknown]
 
-    const initialState = { miniIndex: 0, index: 0 }
-
-    const [indexMini, setIndexMini] = useState(initialState.miniIndex)
-
-    function nextMiniFallback() {
-        setIndexMini((prev) => {
-            if (prev < 1) {
-                return prev + 1
-            }
-            return 1
-        })
-    }
-
-    const [index, setIndex] = useState(initialState.index)
-    function nextFallback() {
-        setIndex((prev) => {
-            if (prev < 1) {
-                return prev + 1
-            }
-            return 1
-        })
-    }
-
     return (
         <>
             <div className="minisprite">
-                <img
-                    onError={(e) => {
-                        e.target.src = fbMinispriteValues[indexMini]
-                        nextMiniFallback()
-                    }}
-                    src={minispritePath + path}
-                    loading="lazy"
-                />
+                <ImageWithFallbacks src={minispritePath + path} fallbacks={fbMinispriteValues} />
             </div>
+
             <div className="sprite pokeball_back">
-                <img
-                    onError={(e) => {
-                        e.target.src = fbSpriteValues[index]
-                        nextFallback()
-                    }}
-                    src={spritePath + path}
-                    loading="lazy"
-                />
+                <ImageWithFallbacks src={spritePath + path} fallbacks={fbSpriteValues} />
             </div>
         </>
     )
