@@ -1,4 +1,4 @@
-export default function ImageSet({ isShiny, imgPath }) {
+export default function ImageSet({ isShiny, imgPath, imgPathFallback, shinyExists }) {
     let path
     if (isShiny) {
         path = imgPath + '-s.webp'
@@ -6,14 +6,28 @@ export default function ImageSet({ isShiny, imgPath }) {
     else {
         path = imgPath + '.webp'
     }
-    const fallback = imgPath + '.webp'
+    let defaultFallback
+    if (shinyExists && isShiny) {
+        defaultFallback = imgPathFallback + '-s.webp'
+    }
+    else {
+        defaultFallback = imgPathFallback + '.webp'
+    }
+
+    let fallback
+    if (shinyExists && isShiny) {
+        fallback = imgPath + '-s.webp'
+    }
+    else {
+        fallback = imgPath + '.webp'
+    }
 
     return (
         <>
             <div className="minisprite">
                 <img
                     onError={(e) => {
-                        e.target.src = '/images/pokemon/minisprite/' + fallback
+                        e.target.src = '/images/pokemon/minisprite/' + defaultFallback
                     }}
                     src={'/images/pokemon/minisprite/' + path}
                     loading="lazy"

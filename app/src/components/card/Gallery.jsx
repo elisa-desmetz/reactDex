@@ -62,7 +62,12 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
         <>
             {!status.mega && !status.giga &&
                 <>
-                    <ImageSet imgPath={imgPath.regular + '-' + activeRegularIndex} isShiny={status.shiny} />
+                    <ImageSet 
+                    imgPath={imgPath.regular + '-' + activeRegularIndex}
+                    imgPathFallback ={imgPath.regular + '-0'} 
+                    isShiny={status.shiny}
+                    shinyExists={galleryRegular[activeRegularIndex].shinyExists} 
+                    />
                     <GalleryController
                         status={{ mega: status.mega }}
                         activeImageSet={{
@@ -72,10 +77,6 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
                         }}
                         updater={{
                             gallery: updateRegularGallery,
-                            shiny: {
-                                isShiny: status.shiny,
-                                toggle: updater.toggleShiny
-                            }
                         }}
                     />
                 </>
