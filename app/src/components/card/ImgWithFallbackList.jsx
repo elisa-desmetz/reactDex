@@ -1,5 +1,6 @@
-import { useState } from "react";
-export default function ImageWithFallbacks({ src, fallbacks, counter }) {
+import { useState } from "react"
+
+export default function ImageWithFallbackList({ src, fallbacks, counter }) {
 
     let init
     if (counter) {
@@ -23,7 +24,7 @@ export default function ImageWithFallbacks({ src, fallbacks, counter }) {
         if (count <= 1) {
             return (
                 <>
-                    <ImageWithFallbacks src={fallbacks[0]} fallbacks={fallbacks} counter={count} />
+                    <ImageWithFallbackList src={fallbacks[0]} fallbacks={fallbacks} counter={count} />
                 </>);
         }
         else {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ImageWithFallbacks from "./ImageWithFallbacks";
+import ImageWithFallbacks from "./ImgWithFallbackList";
 
 export default function ImageSet({ isShiny, imgPath, imgPathFallback, shinyExists }) {
 
