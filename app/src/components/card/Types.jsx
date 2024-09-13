@@ -1,7 +1,7 @@
 export default function Types({ status, typeList, activeMega }) {
     return (
         <div className="types">
-            {(!(status.mega) && !(status.giga)) &&
+            {!(status.mega)  &&
                 <>
                     {typeList.regular.map((type) => (
                         <img key={type} src={"images/type/" + type[1] + ".webp"} />
@@ -22,13 +22,6 @@ export default function Types({ status, typeList, activeMega }) {
                                 <img src={"images/type/" + type[1] + ".webp"} />
                             ))}
                         </>}
-                </>
-            }
-            {status.giga &&
-                <>
-                    {typeList.giga.map((type) => (
-                        <img src={"images/type/" + type[1] + ".webp"} />
-                    ))}
                 </>
             }
         </div>

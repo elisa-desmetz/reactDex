@@ -16,7 +16,7 @@ export default function Front({ pokemon, status, types, updater }) {
 
     const megaXExists = pokemon.megax_type;
     const megaYExists = pokemon.megay_type;
-    const gigaExists = pokemon.giga_type;
+    const gigaExists = pokemon.gmax;
 
     // Mega types
     let megaXTypeList;
@@ -26,12 +26,6 @@ export default function Front({ pokemon, status, types, updater }) {
     }
     if (pokemon.megay_type) {
         megaYTypeList = Object.entries(pokemon.megay_type);
-    }
-
-    // Giga types
-    let gigaTypeList
-    if (pokemon.giga_type) {
-        gigaTypeList = Object.entries(pokemon.giga_type)
     }
 
     // Active mega
@@ -61,9 +55,6 @@ export default function Front({ pokemon, status, types, updater }) {
             cornerGradient = createCornerGradient(types, Object.values(pokemon.megay_type))
         }
     }
-    else if (status.giga) {
-        cornerGradient = createCornerGradient(types, Object.values(pokemon.giga_type))
-    }
 
     return (
         <>
@@ -76,8 +67,7 @@ export default function Front({ pokemon, status, types, updater }) {
                 typeList={{
                     regular: regularTypeList,
                     megaX: megaXTypeList,
-                    megaY: megaYTypeList,
-                    giga: gigaTypeList
+                    megaY: megaYTypeList
                 }}
                 activeMega={activeMega} />
 

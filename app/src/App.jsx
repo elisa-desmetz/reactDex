@@ -236,7 +236,7 @@ function loadDex() {
               reg_galerie: regular->image,
               megax_type: mega->mega_x->type,
               megay_type: mega->mega_y->type,
-              giga_type: gmax->type,
+              gmax,
               generation,
               reg_discovered_by,
               area_id,
