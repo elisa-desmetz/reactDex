@@ -70,7 +70,13 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
                             imageSet: galleryRegular[activeRegularIndex],
                             length: galleryRegular.length
                         }}
-                        updater={updateRegularGallery}
+                        updater={{
+                            gallery: updateRegularGallery,
+                            shiny: {
+                                isShiny: status.shiny,
+                                toggle: updater.toggleShiny
+                            }
+                        }}
                     />
                 </>
             }
@@ -93,7 +99,7 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
                         </>
                         :
                         <>
-                            
+
                             <ImageSet imgPath={imgPath.megaY} isShiny={status.shiny} />
                             <GalleryController
                                 status={{ mega: status.mega }}
@@ -109,19 +115,17 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
                 </>
             }
             {status.giga &&
-                    <ImageSet imgPath={imgPath.giga} isShiny={status.shiny} />
+                <ImageSet imgPath={imgPath.giga} isShiny={status.shiny} />
             }
 
 
 
             <div className="bottom"
                 onClick={(e) => e.stopPropagation()}>
-                {(galleryRegular[activeRegularIndex].shinyExists) &&
-                    <ShinyToggle
-                        className="shinyToggle"
-                        updater={updater.toggleShiny}
-                        isShiny={status.shiny} />
-                }
+                <ShinyToggle
+                    exists={galleryRegular[activeRegularIndex].shinyExists}
+                    updater={updater.toggleShiny}
+                    isShiny={status.shiny} />
                 {(mega.exists.x || mega.exists.y) &&
                     <MegaToggle
                         updater={{

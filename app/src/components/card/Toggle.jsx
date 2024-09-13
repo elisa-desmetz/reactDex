@@ -1,26 +1,47 @@
 
 import { AnimatePresence, motion } from "framer-motion"
 
-export default function ShinyToggle({ updater, isShiny }) {
+export default function ShinyToggle({ updater, exists, isShiny }) {
     return (
         <label className="labelToggle" name="toggleShiny">
-            <input
-                onClick={(e) => {
-                    updater()
-                }}
-                type="checkbox"
-                className="hiddenInput" />
-            <AnimatePresence>
-                <motion.div
-                    className="btnToggle shiny"
-                    initial={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7)" }}
-                    animate={{
-                        filter: isShiny ? "saturate(100%)" : "saturate(10%)",
-                        boxShadow: isShiny ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(255, 51, 96,0.6)" : "",
+            {exists ?
+                <input
+                    onClick={(e) => {
+                        updater()
                     }}
-                    transition={{ duration: 0.1 }}
-                    whileHover={{ boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px #CDCDCD" }} />
-            </AnimatePresence>
+                    type="checkbox"
+                    className="hiddenInput"
+                />
+                :
+                <input
+                    onClick={(e) => {
+                        updater()
+                    }}
+                    type="checkbox"
+                    className="hiddenInput"
+                    disabled
+                />
+            }
+            {exists ?
+                <AnimatePresence>
+                    <motion.div
+                        className="btnToggle shiny"
+                        animate={{
+                            filter: isShiny ? "saturate(100%)" : "saturate(10%)",
+                            boxShadow: isShiny ? "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(255, 51, 96,0.6)" : "",
+                        }}
+                        transition={{
+                            duration: 0.1
+                        }}
+                        whileHover={{
+                            boxShadow: exists && "0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px #CDCDCD"
+                        }}
+                    />
+                </AnimatePresence>
+                :
+                <div 
+                className="btnToggle shiny disabled"/>
+            }
         </label>
     )
 }

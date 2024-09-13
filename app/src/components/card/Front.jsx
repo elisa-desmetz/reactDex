@@ -71,7 +71,6 @@ export default function Front({ pokemon, status, types, updater }) {
                 num={pokemon.pokedex_id}
             />
             <Types
-                key={pokemon.pokedex_id}
                 status={status}
                 typeList={{
                     regular: regularTypeList,
