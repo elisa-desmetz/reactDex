@@ -121,12 +121,12 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
 
 
 
-            <div className="bottom"
-                onClick={(e) => e.stopPropagation()}>
+            <div className="bottom">
                 <ShinyToggle
                     exists={galleryRegular[activeRegularIndex].shinyExists}
                     updater={updater.toggleShiny}
-                    isShiny={status.shiny} />
+                    isShiny={status.shiny} 
+                    onClick={(e) => e.stopPropagation()}/>
                 {(mega.exists.x || mega.exists.y) &&
                     <MegaToggle
                         updater={{
@@ -134,6 +134,7 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
                             giga: updater.toggleGiga
                         }}
                         status={status}
+                        onClick={(e) => e.stopPropagation()}
                     />
                 }
                 {giga.exists &&
@@ -143,6 +144,7 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
                             giga: updater.toggleGiga
                         }}
                         status={status}
+                        onClick={(e) => e.stopPropagation()}
                     />
                 }
                 <div className="corner" style={{ background: gradient }} />
