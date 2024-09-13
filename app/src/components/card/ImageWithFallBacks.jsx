@@ -11,10 +11,6 @@ export default function ImageWithFallbacks({ src, fallbacks, counter }) {
 
     const initialState = init
 
-
-    /**
-     * is our image broken?
-     */
     const [isBroken, setIsBroken] = useState(false);
     const [count, setCount] = useState(initialState)
 
