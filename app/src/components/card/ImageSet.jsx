@@ -15,23 +15,24 @@ export default function ImageSet({ isShiny, imgPath, imgPathFallback, shinyExist
         path = imgPath + '.webp'
     }
 
-    let defaultFallback
+    let minispriteFallback
     if (shinyExists && isShiny) {
-        defaultFallback = imgPathFallback + '-s.webp'
+        minispriteFallback = imgPathFallback + '-s.webp'
     }
     else {
-        defaultFallback = imgPathFallback + '.webp'
+        minispriteFallback = imgPathFallback + '.webp'
     }
-    const fbMinispriteValues = [minispritePath + defaultFallback, minispritePath + unknown]
 
-    let fallback
+    const fbMinispriteValues = [minispritePath + minispriteFallback, minispritePath + unknown]
+
+    let spriteFallback
     if (shinyExists && isShiny) {
-        fallback = imgPath + '-s.webp'
+        spriteFallback = imgPath + '-s.webp'
     }
     else {
-        fallback = imgPath + '.webp'
+        spriteFallback = imgPath + '.webp'
     }
-    const fbSpriteValues = [spritePath + fallback, spritePath + unknown]
+    const fbSpriteValues = [spritePath + spriteFallback, spritePath + unknown]
 
     const initialState = {miniIndex:0, index:0}
     
