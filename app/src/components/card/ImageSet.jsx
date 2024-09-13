@@ -34,20 +34,26 @@ export default function ImageSet({ isShiny, imgPath, imgPathFallback, shinyExist
     }
     const fbSpriteValues = [spritePath + spriteFallback, spritePath + unknown]
 
-    const initialState = {miniIndex:0, index:0}
-    
+    const initialState = { miniIndex: 0, index: 0 }
+
     const [indexMini, setIndexMini] = useState(initialState.miniIndex)
-    
+
     function nextMiniFallback() {
         setIndexMini((prev) => {
-            return prev + 1
+            if (prev < 1) {
+                return prev + 1
+            }
+            return 1
         })
     }
-    
+
     const [index, setIndex] = useState(initialState.index)
     function nextFallback() {
         setIndex((prev) => {
-            return prev + 1
+            if (prev < 1) {
+                return prev + 1
+            }
+            return 1
         })
     }
 
