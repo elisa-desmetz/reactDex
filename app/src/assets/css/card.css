@@ -21,7 +21,7 @@ CARD
     left: 0;
 
     height: 100%;
-    width: 100%;
+    width: 420px;
 
     display: grid;
     grid-template-rows: 30px 45% 1fr;

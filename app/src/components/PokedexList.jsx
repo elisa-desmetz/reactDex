@@ -1,4 +1,4 @@
-import slugify from "../../utils/slugify";
+import slugify from "../../public/utils/slugify";
 
 import { AnimatePresence, motion } from "framer-motion";
 

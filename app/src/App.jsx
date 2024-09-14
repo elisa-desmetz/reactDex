@@ -5,8 +5,8 @@ import './assets/css/card.css'
 import './assets/css/filters.css'
 import './assets/css/pokeball.css'
 
-import slugify from '../utils/slugify'
-import supabase from '../utils/supabase'
+import slugify from '../public/utils/slugify'
+import supabase from '../public/utils/supabase'
 
 import FilterForm from './components/filter/FilterForm'
 import PokedexList from './components/PokedexList'

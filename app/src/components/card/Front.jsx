@@ -4,7 +4,7 @@ import Types from "./Types";
 
 import { useState } from "react";
 
-import createCornerGradient from "../../../utils/createCornerGradient";
+import createCornerGradient from "../../../public/utils/createCornerGradient";
 
 export default function Front({ pokemon, status, types, updater }) {
 
