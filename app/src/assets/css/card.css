@@ -181,7 +181,7 @@ CARD
             filter: saturate(10%);
         }
 
-        .labelToggle input:checked ~ .btnToggle{
+        .btnToggle.checked{
             filter:
                 saturate(100%);
         }
@@ -202,7 +202,7 @@ CARD
             background-size: 30px;
         }
 
-        .labelToggle input:checked ~ .shiny {
+        .shiny.checked {
             box-shadow:
                 0 0 0 2px rgba(255, 255, 255, 0.7),
                 inset 0 0 5px rgba(255, 51, 96,0.6);
@@ -215,7 +215,7 @@ CARD
             background-size: 30px;
         }
 
-        .labelToggle input:checked ~ .mega {
+        .mega.checked{
             box-shadow:
                 0 0 0 2px rgba(255, 255, 255, 0.7),
                 inset 0 0 5px rgba(2,169,167,0.8);
@@ -228,7 +228,7 @@ CARD
             background-size: 30px;
         }
 
-        .labelToggle input:checked ~ .giga {
+        .giga.checked {
             box-shadow:
                 0 0 0 2px rgba(255, 255, 255, 0.7),
                 inset 0 0 5px rgba(231, 0, 64, 0.8);

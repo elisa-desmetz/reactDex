@@ -1,4 +1,4 @@
-export default function ShinyToggle({ updater, exists }) {
+export default function ShinyToggle({ updater, exists, isShiny }) {
     return (
         <label className="labelToggle" name="toggleShiny">
             {exists ?
@@ -20,7 +20,12 @@ export default function ShinyToggle({ updater, exists }) {
                 />
             }
             {exists ?
-                <div className="btnToggle shiny" />
+                <>
+                { isShiny ?
+                    <div className="btnToggle shiny checked" /> :
+                    <div className="btnToggle shiny" />
+                }
+                </>
                 :
                 <div className="btnToggle shiny disabled" />
             }
@@ -40,7 +45,10 @@ export function MegaToggle({ updater, status }) {
                 }}
                 type="checkbox"
                 className="hiddenInput" />
-            <div className="btnToggle mega" />
+            {status.mega ?
+                <div className="btnToggle mega checked" /> :
+                <div className="btnToggle mega" />
+            }
         </label>
     )
 }
@@ -57,7 +65,10 @@ export function GigaToggle({ updater, status }) {
                 }}
                 type="checkbox"
                 className="hiddenInput" />
-            <div className="btnToggle giga" />
+            {status.giga ?
+                <div className="btnToggle giga checked" /> :
+                <div className="btnToggle giga" />
+            }
         </label>
     )
 }

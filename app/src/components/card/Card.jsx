@@ -29,7 +29,7 @@ export default function Card({ pokemon, tables }) {
     }
 
     function toggleGiga() {
-        setGiga((prev) => !prev)
+        setGiga((prev) => !prev )
     }
 
     return (
