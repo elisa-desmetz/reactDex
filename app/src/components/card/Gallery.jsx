@@ -5,7 +5,7 @@ import GalleryController from "./GalleryController"
 
 import { useState } from "react"
 
-export default function Gallery({ imgPath, regularGallery, mega, giga, status, updater, gradient }) {
+export default function Gallery({ slugName, imgPath, regularGallery, mega, giga, status, updater, gradient }) {
 
     const galleryRegular = new Array()
     const galleryMega = new Array()
@@ -142,6 +142,11 @@ export default function Gallery({ imgPath, regularGallery, mega, giga, status, u
                         status={status}
                     />
                 }
+                <a  href={"https://www.pokepedia.fr/"+ slugName}
+                    target="_blank"
+                    onClick={(e) => { e.stopPropagation() }}
+                    className="btnToggle pokepedia"
+                />
                 <div className="corner" style={{ background: gradient }} />
             </div>
         </>
