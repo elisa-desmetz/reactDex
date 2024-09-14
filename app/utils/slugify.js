@@ -11,8 +11,8 @@ function slugify(input) {
     slug = slug.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     // replace invalid chars with spaces
     slug = slug.replace(/[^a-z0-9\s-]/g, " ").trim();
-    // replace multiple spaces or hyphens with a single hyphen
-    slug = slug.replace(/[\s-]+/g, "-");
+    // replace multiple spaces or hyphens with a an underscore
+    slug = slug.replace(/[\s-]+/g, "_");
     return slug;
 }
 

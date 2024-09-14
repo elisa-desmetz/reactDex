@@ -127,6 +127,8 @@ function Page() {
 
   // Filtrer le pokedex selon les critères de recherche
   const filteredPokedex = tbPokedex.filter((pokemon) => {
+    // <<<< DEBUG >>>> console.debug(pokemon.pokedex_id, pokemon.name_fr)
+    
     // Récupération de la liste des types du pokemon pour contrôle
     let pokemonTypes = new Set(Object.values(pokemon.reg_type));
     if (pokemon.megax_type) {

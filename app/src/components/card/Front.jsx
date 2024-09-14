@@ -9,7 +9,6 @@ import createCornerGradient from "../../../utils/createCornerGradient";
 export default function Front({ pokemon, status, types, updater }) {
 
     const imgPath = pokemon.pokedex_id + "-" + pokemon.variant + "-" + pokemon.forme
-    const imgPathFallback = pokemon.pokedex_id + "-" + pokemon.variant + "-0"
 
     const regularTypeList = Object.entries(pokemon.reg_type);
     const regularGallery = Object.entries(pokemon.reg_galerie);
