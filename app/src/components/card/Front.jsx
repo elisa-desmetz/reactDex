@@ -1,10 +1,9 @@
-import Identity from "./Identity";
 import Gallery from "./Gallery";
 import Types from "./Types";
 
 import { useState } from "react";
 
-import createCornerGradient from "../../../public/utils/createCornerGradient";
+import createCornerGradient from "../../../utils/createCornerGradient";
 
 export default function Front({ pokemon, status, types, updater }) {
 
@@ -43,7 +42,7 @@ export default function Front({ pokemon, status, types, updater }) {
 
 
     let cornerGradient
-    if (!status.mega && !status.giga) {
+    if (!status.mega) {
         cornerGradient = createCornerGradient(types, Object.values(pokemon.reg_type))
     }
     else if (status.mega) {
@@ -57,10 +56,9 @@ export default function Front({ pokemon, status, types, updater }) {
 
     return (
         <>
-            <Identity
-                name={{ fr: pokemon.name_fr, en: pokemon.name_en }}
-                num={pokemon.pokedex_id}
-            />
+            <div className="nameFr">{pokemon.name_fr}</div>
+            <div className="nameEn">{pokemon.name_en}</div>
+            <div className="num">{"#" + String(pokemon.pokedex_id).padStart(3, "0")}</div>
             <Types
                 status={status}
                 typeList={{
@@ -72,7 +70,7 @@ export default function Front({ pokemon, status, types, updater }) {
 
             <Gallery
                 imgPath={{
-                    regular:imgPath,
+                    regular: imgPath,
                     megaX: imgPath + '-mx',
                     megaY: imgPath + '-my',
                     giga: imgPath + '-g'

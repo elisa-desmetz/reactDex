@@ -5,8 +5,8 @@ import './assets/css/card.css'
 import './assets/css/filters.css'
 import './assets/css/pokeball.css'
 
-import slugify from '../public/utils/slugify'
-import supabase from '../public/utils/supabase'
+import slugify from '../utils/slugify'
+import supabase from '../utils/supabase'
 
 import FilterForm from './components/filter/FilterForm'
 import PokedexList from './components/PokedexList'
@@ -138,30 +138,31 @@ function Page() {
       pokemonTypes = pokemonTypes.union(new Set(Object.values(pokemon.megay_type)))
     }
 
-    return (
-      // Filtre sur la zone de capture
-      ((areaFilters.size === 0 ||
-        areaFilters.has(pokemon.area_id) && pokemon.reg_discovered_by)) &&
+    const filteredData = 
+    // Filtre sur la zone de capture
+    ((areaFilters.size === 0 ||
+      areaFilters.has(pokemon.area_id) && pokemon.reg_discovered_by)) &&
 
-      // Filtre sur le type
-      (typeFilters.size === 0 ||
-        pokemonTypes.isSupersetOf(typeFilters)
-      ) &&
+    // Filtre sur le type
+    (typeFilters.size === 0 ||
+      pokemonTypes.isSupersetOf(typeFilters)
+    ) &&
 
-      // Filtre recherche textuelle sur le nom
-      ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
-      ) &&
+    // Filtre recherche textuelle sur le nom
+    ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
+    ) &&
 
-      // Filtre sur la génération
-      (generationFilters.size === 0 ||
-        generationFilters.has(pokemon.generation)
-      ) &&
+    // Filtre sur la génération
+    (generationFilters.size === 0 ||
+      generationFilters.has(pokemon.generation)
+    ) &&
 
-      // Filtre sur variant
-      (variantFilters.size === 0 ||
-        variantFilters.has(pokemon.variant)
-      )
-    );
+    // Filtre sur variant
+    (variantFilters.size === 0 ||
+      variantFilters.has(pokemon.variant)
+    )
+
+    return filteredData;
   });
 
   // Calculer le nombre de résultat et générer la phrase à afficher.

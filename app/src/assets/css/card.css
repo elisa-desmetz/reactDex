@@ -78,7 +78,7 @@ CARD
     background-color: #DEDEDE;
 
     .nameFr {
-        z-index:2;
+        z-index: 2;
         grid-area: 1 / 2 / 2 / 3;
         font-variant-caps: small-caps;
         align-self: end;
@@ -89,7 +89,7 @@ CARD
     }
 
     .nameEn {
-        z-index:2;
+        z-index: 2;
         grid-area: 2 / 2 / 3 / 3;
         font-variant-caps: small-caps;
         align-self: start;
@@ -115,7 +115,7 @@ CARD
         grid-area: 3 / 3 / 5 / 4;
     }
 
-    .sprite > img {
+    .sprite>img {
         width: 96px;
         height: 96px;
     }
@@ -164,6 +164,8 @@ CARD
             -webkit-appearance: none;
             appearance: none;
 
+            filter: saturate(10%);
+
             display: flex;
             align-items: center;
             justify-content: center;
@@ -179,6 +181,15 @@ CARD
             filter: saturate(10%);
         }
 
+        .labelToggle input:checked ~ .btnToggle{
+            filter:
+                saturate(100%);
+        }
+
+        .btnToggle:hover:not(.disabled) {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 5px #CDCDCD;
+        }
+
         .btnToggle.disabled {
             cursor: default;
             opacity: 0.7;
@@ -191,6 +202,12 @@ CARD
             background-size: 30px;
         }
 
+        .labelToggle input:checked ~ .shiny {
+            box-shadow:
+                0 0 0 2px rgba(255, 255, 255, 0.7),
+                inset 0 0 5px rgba(255, 51, 96,0.6);
+        }
+
         .btnToggle.mega {
             background: center / contain url("/images/mega.webp"), rgba(255, 255, 255, 0.4);
             background-clip: padding-box;
@@ -198,11 +215,23 @@ CARD
             background-size: 30px;
         }
 
+        .labelToggle input:checked ~ .mega {
+            box-shadow:
+                0 0 0 2px rgba(255, 255, 255, 0.7),
+                inset 0 0 5px rgba(2,169,167,0.8);
+        }
+
         .btnToggle.giga {
             background: center / contain url("/images/giga.webp"), rgba(255, 255, 255, 0.4);
             background-clip: padding-box;
             background-repeat: no-repeat;
             background-size: 30px;
+        }
+
+        .labelToggle input:checked ~ .giga {
+            box-shadow:
+                0 0 0 2px rgba(255, 255, 255, 0.7),
+                inset 0 0 5px rgba(231, 0, 64, 0.8);
         }
     }
 

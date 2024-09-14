@@ -32,10 +32,7 @@ export default function Card({ pokemon, tables }) {
         setGiga((prev) => !prev)
     }
 
-
-
     return (
-
         <AnimatePresence>
             <motion.div
                 transition={{ duration: 0.7 }}

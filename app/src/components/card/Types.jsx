@@ -1,7 +1,7 @@
 export default function Types({ status, typeList, activeMega }) {
     return (
         <div className="types">
-            {!(status.mega)  &&
+            {!(status.mega) &&
                 <>
                     {typeList.regular.map((type) => (
                         <img key={type} src={"images/type/" + type[1] + ".webp"} />
@@ -13,13 +13,13 @@ export default function Types({ status, typeList, activeMega }) {
                     {(activeMega == 'x') ?
                         <>
                             {typeList.megaX.map((type) => (
-                                <img src={"images/type/" + type[1] + ".webp"} />
+                                <img key={type} src={"images/type/" + type[1] + ".webp"} />
                             ))}
                         </>
                         :
                         <>
                             {typeList.megaY.map((type) => (
-                                <img src={"images/type/" + type[1] + ".webp"} />
+                                <img key={type} src={"images/type/" + type[1] + ".webp"} />
                             ))}
                         </>}
                 </>

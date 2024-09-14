@@ -1,4 +1,4 @@
-import slugify from "../../../public/utils/slugify"
+import slugify from "../../../utils/slugify"
 
 import Collapsible from "./Collapsible"
 

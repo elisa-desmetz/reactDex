@@ -78,7 +78,7 @@ COLLAPSE
 
   .card-collapse {
     overflow: hidden;
-    transition: height 0.5s  ;
+    transition: height 0.3s  ;
   }
 }
 
