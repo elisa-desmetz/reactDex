@@ -4,7 +4,7 @@ import Types from "./Types";
 import { useState } from "react";
 
 import createCornerGradient from "../../../utils/createCornerGradient";
-import slugify from "../../../utils/slugify";
+import pokepediaLinkTransform from "../../../utils/pokepediaLinkTransform";
 
 export default function Front({ pokemon, status, types, updater }) {
 
@@ -70,7 +70,7 @@ export default function Front({ pokemon, status, types, updater }) {
                 activeMega={activeMega} />
 
             <Gallery
-                slugName={slugify(pokemon.name_fr)}
+                slugName={pokepediaLinkTransform(pokemon.name_fr)}
                 imgPath={{
                     regular: imgPath,
                     megaX: imgPath + '-mx',
