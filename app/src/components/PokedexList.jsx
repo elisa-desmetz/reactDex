@@ -23,27 +23,3 @@ export default function PokedexList({ tables }) {
                 ))}
         </>)
 }
-
-/*
-export default function PokedexList({ tables }) {
-    return (
-        <>
-            <AnimatePresence>
-                {tables.pokedex.map((pokemon, index) => (
-                    <motion.div
-                        key={index}
-                        layout
-                        initial={{ display: "none" }}
-                        animate={{ display: "block" }}
-                        exit={{ display: "none" }}
-                    >
-                        <Card
-                            key={slugify(pokemon.name_fr)}
-                            pokemon={pokemon}
-                            tables={{ type: tables.type, area: tables.area }} />
-                    </motion.div>
-                ))}
-            </AnimatePresence>
-        </>)
-}
-        */

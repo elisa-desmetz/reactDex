@@ -35,93 +35,85 @@ export default function Card({ pokemon, tables }) {
 
 
     return (
+        <motion.div
+            transition={{ duration: 0.7 }}
+            animate={{ rotateY: flip ? 0 : 180 }}
+            className="card"
+            onClick={(e) => {
+                e.stopPropagation
+                setFlip((prevState) => !prevState)
+            }}>
 
-        <AnimatePresence>
             <motion.div
+                key="front"
+                className="front"
                 transition={{ duration: 0.7 }}
                 animate={{ rotateY: flip ? 0 : 180 }}
-            >
-                <motion.div
-                    transition={{ duration: 0.7 }}
-                    animate={{ rotateY: flip ? 0 : 180 }}
-                    className="card"
-                    onClick={(e) => {
-                        e.stopPropagation
-                        setFlip((prevState) => !prevState)
-                    }}>
+                exit={{ opacity: 0 }}>
 
-                    <motion.div
-                        key="front"
-                        className="front"
-                        transition={{ duration: 0.7 }}
-                        animate={{ rotateY: flip ? 0 : 180 }}
-                        exit={{ opacity: 0 }}>
+                <Front
+                    pokemon={pokemon}
+                    status={{
+                        shiny: isShiny,
+                        mega: isMega,
+                        giga: isGiga,
+                    }}
+                    types={tables.type}
+                    updater={{
+                        shiny: toggleShiny,
+                        mega: toggleMega,
+                        giga: toggleGiga,
+                    }}
+                />
 
-                        <Front
-                            pokemon={pokemon}
-                            status={{
-                                shiny: isShiny,
-                                mega: isMega,
-                                giga: isGiga,
-                            }}
-                            types={tables.type}
-                            updater={{
-                                shiny: toggleShiny,
-                                mega: toggleMega,
-                                giga: toggleGiga,
-                            }}
-                        />
+            </motion.div>
 
-                    </motion.div>
-
-                    <motion.div
-                        key="back"
-                        className="back"
-                        style={!pokemon.reg_discovered_by ?
-                            {
-                                backgroundImage:
-                                    `linear-gradient(
+            <motion.div
+                key="back"
+                className="back"
+                style={!pokemon.reg_discovered_by ?
+                    {
+                        backgroundImage:
+                            `linear-gradient(
                                     rgba(var(--bkg-card), 0.8),
                                     transparent 50%),
                                     url("${neverEncountered.areaImg}")`
-                            }
-                            :
-                            {
-                                backgroundImage:
-                                    `linear-gradient(
+                    }
+                    :
+                    {
+                        backgroundImage:
+                            `linear-gradient(
                                     rgba(var(--bkg-card), 0.8) 15%,
                                     transparent 50%),
                                     url("${tables.area.at(pokemon.area_id).img}")`
-                            }
-                        }
-                        initial={{ rotateY: 180 }}
-                        transition={{ duration: 0.7 }}
-                        animate={{ rotateY: flip ? 180 : 0 }}
-                        exit={{ opacity: 1 }}>
+                    }
+                }
+                initial={{ rotateY: 180 }}
+                transition={{ duration: 0.7 }}
+                animate={{ rotateY: flip ? 180 : 0 }}
+                exit={{ opacity: 1 }}>
 
-                        {!pokemon.reg_discovered_by ?
-                            <Back
-                                data={{
-                                    discoveredBy: neverEncountered.discoveredBy,
-                                    areaName: neverEncountered.areaName,
-                                    areaImg: neverEncountered.areaImg,
-                                    description: neverEncountered.description,
-                                }}
-                            />
-                            :
-                            <Back
-                                data={{
-                                    discoveredBy: pokemon.reg_discovered_by,
-                                    areaName: tables.area.at(pokemon.area_id).name,
-                                    areaImg: tables.area.at(pokemon.area_id).img,
-                                    description: pokemon.desc,
-                                }}
-                            />
-                        }
-                    </motion.div>
-                </motion.div>
+                {!pokemon.reg_discovered_by ?
+                    <Back
+                        data={{
+                            discoveredBy: neverEncountered.discoveredBy,
+                            areaName: neverEncountered.areaName,
+                            areaImg: neverEncountered.areaImg,
+                            description: neverEncountered.description,
+                        }}
+                    />
+                    :
+                    <Back
+                        data={{
+                            discoveredBy: pokemon.reg_discovered_by,
+                            areaName: tables.area.at(pokemon.area_id).name,
+                            areaImg: tables.area.at(pokemon.area_id).img,
+                            description: pokemon.desc,
+                        }}
+                    />
+                }
             </motion.div>
-        </AnimatePresence>
+        </motion.div>
     )
 }
 
