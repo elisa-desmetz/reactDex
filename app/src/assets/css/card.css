@@ -273,6 +273,8 @@ CORNER
 }
 
 .navigGallery {
+    cursor: pointer;
+    
     background-color: ghostwhite;
     width: 150px;
     height: 150px;
