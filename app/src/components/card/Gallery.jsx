@@ -142,7 +142,8 @@ export default function Gallery({ slugName, imgPath, regularGallery, mega, giga,
                         status={status}
                     />
                 }
-                <a  href={"https://www.pokepedia.fr/"+ slugName}
+                <a  title="Fiche Poképédia"
+                    href={"https://www.pokepedia.fr/"+ slugName}
                     target="_blank"
                     onClick={(e) => { e.stopPropagation() }}
                     className="btnToggle pokepedia"

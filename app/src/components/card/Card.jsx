@@ -1,6 +1,5 @@
 import Front from "./Front";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 export default function Card({ pokemon, tables }) {
@@ -29,9 +28,79 @@ export default function Card({ pokemon, tables }) {
     }
 
     function toggleGiga() {
-        setGiga((prev) => !prev )
+        setGiga((prev) => !prev)
     }
 
+    return (
+        <div
+            className={flip ? "card" :"card doFlip"}
+            onClick={(e) => {
+                e.stopPropagation
+                setFlip((prevState) => !prevState)
+            }}>
+
+            <div className="front">
+                <Front
+                    pokemon={pokemon}
+                    status={{
+                        shiny: isShiny,
+                        mega: isMega,
+                        giga: isGiga,
+                    }}
+                    types={tables.type}
+                    updater={{
+                        shiny: toggleShiny,
+                        mega: toggleMega,
+                        giga: toggleGiga,
+                    }}
+                />
+            </div>
+
+            <div
+                className="back"
+                style={!pokemon.reg_discovered_by ?
+                    {
+                        backgroundImage:
+                            `linear-gradient(
+                                    rgba(var(--bkg-card), 0.8),
+                                    transparent 50%),
+                                    url("${neverEncountered.areaImg}")`
+                    }
+                    :
+                    {
+                        backgroundImage:
+                            `linear-gradient(
+                                    rgba(var(--bkg-card), 0.9) 8%,
+                                    rgba(var(--bkg-card), 0.8) 25%,
+                                    transparent 50%),
+                                    url("${tables.area.at(pokemon.area_id).img}")`
+                    }
+                }
+            >
+                {!pokemon.reg_discovered_by ?
+                    <Back
+                        data={{
+                            discoveredBy: neverEncountered.discoveredBy,
+                            areaName: neverEncountered.areaName,
+                            areaImg: neverEncountered.areaImg,
+                            description: neverEncountered.description,
+                        }}
+                    />
+                    :
+                    <Back
+                        data={{
+                            discoveredBy: pokemon.reg_discovered_by,
+                            areaName: tables.area.at(pokemon.area_id).name,
+                            areaImg: tables.area.at(pokemon.area_id).img,
+                            description: pokemon.desc,
+                        }}
+                    />
+                }
+            </div>
+        </div>
+    )
+
+    /*
     return (
         <AnimatePresence>
             <motion.div
@@ -86,7 +155,8 @@ export default function Card({ pokemon, tables }) {
                             {
                                 backgroundImage:
                                     `linear-gradient(
-                                    rgba(var(--bkg-card), 0.8) 15%,
+                                    rgba(var(--bkg-card), 0.9) 8%,
+                                    rgba(var(--bkg-card), 0.8) 25%,
                                     transparent 50%),
                                     url("${tables.area.at(pokemon.area_id).img}")`
                             }
@@ -120,6 +190,7 @@ export default function Card({ pokemon, tables }) {
             </motion.div>
         </AnimatePresence>
     )
+        */
 }
 
 function Back({ data }) {
@@ -127,6 +198,7 @@ function Back({ data }) {
         <>
             <div className="areaName">{data.areaName}</div>
             <div className="discoveredBy">{data.discoveredBy}</div>
+            <div className="shinyDiscoveredBy">-</div>
             <div className="description">{data.description}</div>
         </>
     )

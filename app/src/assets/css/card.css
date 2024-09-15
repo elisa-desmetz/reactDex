@@ -3,28 +3,46 @@
 CARD
 ----------
 */
+.doFlip {
+    -o-transform: rotateY(-180deg);
+    -webkit-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+  }
+
 .card {
-    display: flex;
-    flex-direction: column;
-    width: 420px;
+    display: grid;
+
+    -o-transition: all 0.7s ease-out;
+    -webkit-transition: all 0.7s ease-out;
+    -ms-transition: all 0.7s ease-out;
+    transition: all 0.7s ease-out;
+
+    -o-transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 .front,
 .back {
     backface-visibility: hidden;
     padding: 5px;
+    grid-column: 1;
+    grid-row: 1;
+    width: 420px;
 }
 
 .back {
-    position: absolute;
-    top: 0;
-    left: 0;
+    -o-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 
     height: 100%;
-    width: 420px;
-
+    width: 430px;
     display: grid;
-    grid-template-rows: 30px 45% 1fr;
+    grid-template-rows: 30px 20px 35% 1fr;
     align-self: center;
     justify-self: center;
 
@@ -52,8 +70,19 @@ CARD
         content: "🔎 ";
     }
 
-    .description {
+    .shinyDiscoveredBy {
         grid-area: 3 / 1;
+        font-size: 14px;
+        font-weight: 600;
+        text-shadow: rgba(var(--bkg-card), 1) 0px 0px 3px;
+    }
+
+    .shinyDiscoveredBy:before {
+        content: "✨ ";
+    }
+
+    .description {
+        grid-area: 4 / 1;
         box-sizing: border-box;
         width: 97%;
         height: 100%;
@@ -69,7 +98,6 @@ CARD
 }
 
 .front {
-    height: 100%;
     display: grid;
     grid-template-columns: 75px 2fr 100px;
     grid-template-rows: 50px 25px 30px 70px 50px;
@@ -79,7 +107,7 @@ CARD
 
     .nameFr {
         z-index: 2;
-        grid-area: 1 / 2 / 2 / 3;
+        grid-area: 1 / 2 / 2 / 4;
         font-variant-caps: small-caps;
         align-self: end;
         color: rgba(31, 31, 31, 0.8);
@@ -274,7 +302,7 @@ CORNER
 
 .navigGallery {
     cursor: pointer;
-    
+
     background-color: ghostwhite;
     width: 150px;
     height: 150px;
