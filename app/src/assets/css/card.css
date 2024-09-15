@@ -133,14 +133,6 @@ CARD
         width: 100px;
     }
 
-    .galleryControl {
-        grid-area: 4 / 1 / 5 / 3;
-        margin: 0px 30px;
-        gap: 10px;
-        display: flex;
-        align-items: center;
-    }
-
     .bottom {
         grid-area: 5 / 1 / 5 / 4;
         grid-template-columns: repeat(3, 50px) auto 40px;
@@ -270,6 +262,16 @@ CORNER
     height: 40px;
 }
 
+.galleryControl {
+    grid-area: 4 / 1 / 5 / 3;
+    margin: 0px 30px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-family: var(--font-sans);
+}
+
 .navigGallery {
     background-color: ghostwhite;
     width: 150px;
@@ -283,6 +285,8 @@ CORNER
     border-bottom:
         15px solid transparent;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    opacity: 0.5;
+    transition-duration: 300ms;
 }
 
 .navigGallery.right {
@@ -290,7 +294,17 @@ CORNER
         20px solid rgba(100, 100, 100, 1);
 }
 
+.navigGallery.right:hover {
+    transform: translate(10%);
+    opacity: 1
+}
+
+
 .navigGallery.left {
     border-right:
         20px solid rgba(100, 100, 100, 1);
+}
+.navigGallery.left:hover {
+    transform: translate(-10%);
+    opacity: 1
 }

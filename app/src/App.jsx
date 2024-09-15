@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './assets/css/App.css'
 import './assets/css/card.css'
 import './assets/css/filters.css'
+import './assets/css/loader.css'
 import './assets/css/pokeball.css'
 
 import slugify from '../utils/slugify'
@@ -128,7 +129,7 @@ function Page() {
   // Filtrer le pokedex selon les critères de recherche
   const filteredPokedex = tbPokedex.filter((pokemon) => {
     // <<<< DEBUG >>>> console.debug(pokemon.pokedex_id, pokemon.name_fr)
-    
+
     // Récupération de la liste des types du pokemon pour contrôle
     let pokemonTypes = new Set(Object.values(pokemon.reg_type));
     if (pokemon.megax_type) {
@@ -138,29 +139,29 @@ function Page() {
       pokemonTypes = pokemonTypes.union(new Set(Object.values(pokemon.megay_type)))
     }
 
-    const filteredData = 
-    // Filtre sur la zone de capture
-    ((areaFilters.size === 0 ||
-      areaFilters.has(pokemon.area_id) && pokemon.reg_discovered_by)) &&
+    const filteredData =
+      // Filtre sur la zone de capture
+      ((areaFilters.size === 0 ||
+        areaFilters.has(pokemon.area_id) && pokemon.reg_discovered_by)) &&
 
-    // Filtre sur le type
-    (typeFilters.size === 0 ||
-      pokemonTypes.isSupersetOf(typeFilters)
-    ) &&
+      // Filtre sur le type
+      (typeFilters.size === 0 ||
+        pokemonTypes.isSupersetOf(typeFilters)
+      ) &&
 
-    // Filtre recherche textuelle sur le nom
-    ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
-    ) &&
+      // Filtre recherche textuelle sur le nom
+      ((slugify(pokemon.name_fr)).match(textSearch) || (slugify(pokemon.name_en)).match(textSearch)
+      ) &&
 
-    // Filtre sur la génération
-    (generationFilters.size === 0 ||
-      generationFilters.has(pokemon.generation)
-    ) &&
+      // Filtre sur la génération
+      (generationFilters.size === 0 ||
+        generationFilters.has(pokemon.generation)
+      ) &&
 
-    // Filtre sur variant
-    (variantFilters.size === 0 ||
-      variantFilters.has(pokemon.variant)
-    )
+      // Filtre sur variant
+      (variantFilters.size === 0 ||
+        variantFilters.has(pokemon.variant)
+      )
 
     return filteredData;
   });
@@ -180,7 +181,13 @@ function Page() {
 
   // Contrôler le chargement des tables.
   if (loadingDex || loadingTypes || loadingAreas) {
-    return <div>Chargement...</div>;
+    return (
+      <div id="load">
+        <div>Chargement du Pokedex...</div>
+        <div className="loader">
+        </div>
+      </div>
+    );
   }
 
   // Structure de la page
@@ -211,7 +218,7 @@ function Page() {
         }}
       />
     </div>
-    <ScrollButtonUp/>
+    <ScrollButtonUp />
   </>
   )
 }

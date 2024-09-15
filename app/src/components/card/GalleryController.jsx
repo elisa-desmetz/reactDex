@@ -1,7 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion"
-
-export default function GalleryController({ status, activeImageSet, updater }) {
-    
+export default function GalleryController({ activeImageSet, updater }) {
 
     let nameDescription = ""
     switch (activeImageSet.imageSet.name) {
@@ -19,35 +16,27 @@ export default function GalleryController({ status, activeImageSet, updater }) {
             break
     }
 
-
-
     return (
         <>
-        {activeImageSet.length != 1 &&
+            {activeImageSet.length != 1 &&
 
-                <div className="galleryControl" style={{justifyContent:"space-between"}}>
-                    <AnimatePresence>
-                        <motion.button
-                            key="left"
-                            initial={{ opacity: 0.5 }}
-                            whileHover={{ x: "-10%", opacity: 1 }}
-                            className="navigGallery left" onClick={(e) => {
-                                e.stopPropagation()
-                                {updater(activeImageSet.activeIndex - 1)}
-                                
-                            }} />
-                        <div>{nameDescription} - {activeImageSet.activeIndex + 1}/{activeImageSet.length}</div>
-                        <motion.button
-                            key="right"
-                            initial={{ opacity: 0.5 }}
-                            whileHover={{ x: "10%", opacity: 1 }}
-                            className="navigGallery right" onClick={(e) => {
-                                e.stopPropagation()
-                                updater(activeImageSet.activeIndex + 1)
-                            }} />
-                    </AnimatePresence>
+                <div className="galleryControl" style={{ justifyContent: "space-between" }}>
+                    <button
+                        className="navigGallery left" onClick={(e) => {
+                            e.stopPropagation()
+                            { updater(activeImageSet.activeIndex - 1) }
+
+                        }} />
+                    <div>{nameDescription}
+                        <span className="navigIndex">   &nbsp;-&nbsp;{activeImageSet.activeIndex + 1}/{activeImageSet.length}</span>
+                    </div>
+                    <button
+                        className="navigGallery right" onClick={(e) => {
+                            e.stopPropagation()
+                            updater(activeImageSet.activeIndex + 1)
+                        }} />
                 </div>
-        }
+            }
         </>
     )
 }

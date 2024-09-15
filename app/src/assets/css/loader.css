@@ -1,5 +1,5 @@
 #load{
-    grid-area:1/1;
+    width: 100vw;
     display:flex;
     gap:10px;
     flex-direction:column;

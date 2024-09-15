@@ -11,9 +11,6 @@ export default function ShinyToggle({ updater, exists, isShiny }) {
                 />
                 :
                 <input
-                    onClick={(e) => {
-                        updater()
-                    }}
                     type="checkbox"
                     className="hiddenInput"
                     disabled
@@ -21,13 +18,18 @@ export default function ShinyToggle({ updater, exists, isShiny }) {
             }
             {exists ?
                 <>
-                { isShiny ?
-                    <div className="btnToggle shiny checked" /> :
-                    <div className="btnToggle shiny" />
-                }
+                    {isShiny ?
+                        <div className="btnToggle shiny checked" /> :
+                        <div className="btnToggle shiny" />
+                    }
                 </>
                 :
-                <div className="btnToggle shiny disabled" />
+                <div
+                    className="btnToggle shiny disabled"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                    }}
+                />
             }
         </label>
     )
