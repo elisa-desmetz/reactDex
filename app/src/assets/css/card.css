@@ -109,6 +109,7 @@ CARD
         z-index: 2;
         grid-area: 1 / 2 / 2 / 4;
         font-variant-caps: small-caps;
+        white-space: pre-line;
         align-self: end;
         color: rgba(31, 31, 31, 0.8);
         font-weight: 600;
@@ -118,7 +119,7 @@ CARD
 
     .nameEn {
         z-index: 2;
-        grid-area: 2 / 2 / 3 / 3;
+        grid-area: 2 / 2 / 3 / 4;
         font-variant-caps: small-caps;
         align-self: start;
         margin-left: 10px;
