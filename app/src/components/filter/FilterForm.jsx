@@ -6,7 +6,7 @@ import Collapsible from "./Collapsible"
 // Créer la section de la page correspondant aux critères de recherche
 export default function FilterForm({ tables, reset, updater }) {
     return (
-        <form id="filterForm">
+        <form id="filterForm" onSubmit={e => { e.preventDefault(); }}>
             <div id="miscFilter">
                 <MiscFilters
                     updater={{
